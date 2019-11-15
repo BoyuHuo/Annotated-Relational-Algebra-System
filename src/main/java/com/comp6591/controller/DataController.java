@@ -29,7 +29,6 @@ public class DataController {
         List<Map<String, String>> data = fileService.readData(fileName, ",", "UTF-8");
         System.out.println(data.size());
 
-
         return responseBuilder.build();
     }
 }

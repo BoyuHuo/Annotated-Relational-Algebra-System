@@ -16,7 +16,7 @@ public class FileServiceImp implements FileService {
 
     private final static String filePath = "src/main/resources/data";
 
-    public static List<Map<String, String>> readData(String filename, String regex, String encoding) {
+    public List<Map<String, String>> readData(String filename, String regex, String encoding) {
         List<Map<String, String>> data = new ArrayList<Map<String, String>>();
         File file = new File(filePath+"/"+filename);
         String[] columnName;

@@ -2,7 +2,7 @@ function modelTest() {
     var formData = new FormData();
     formData.append("file", document.getElementById("fileInput").files[0]);
     $.ajax({
-        url: "/rest/picture",
+        url: "/rest/data",
         data: formData,
         type: "POST",
         beforeSend: function (XMLHttpRequest) {
