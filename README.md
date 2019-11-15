@@ -1,2 +1,2 @@
-# r-Annotated-Relational-Algebra-System
+# Annotated-Relational-Algebra-System
 Project For Comp 6591 KBS
