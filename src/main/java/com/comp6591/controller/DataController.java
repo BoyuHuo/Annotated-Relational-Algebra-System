@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 @Controller
-@RequestMapping(path = "/rest/picture")
-public class DemoController {
+@RequestMapping(path = "/rest/data")
+public class DataController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public final Response testAPI(@RequestParam("file") MultipartFile file) {
+    public final Response loadData(@RequestParam("file") MultipartFile file) {
         Response.Builder responseBuilder = Response.getBuilder();
+
+
+
 
         return responseBuilder.build();
     }

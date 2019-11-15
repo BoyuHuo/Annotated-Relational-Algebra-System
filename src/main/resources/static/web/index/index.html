@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Lesion Segmentation Portal</title>
   <link rel="stylesheet" href="../../assets/utils/css/bootstrap.css">
-  <link rel="stylesheet" href="../../assets/utils/css/index.css">
   <link rel="stylesheet" href="../../assets/utils/css/carousel.css">
-  <script src="../../assets/utils/js/jquery.js"></script>
+
+  <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -63,11 +63,6 @@
             <div class="row">
               <ul id="resultList" class="list-group clearfix list-btn">
                 <li class="list-group-item" id="segamentationLoading" style="display: none">
-<!--                  <div>
-                    <img src="https://ocdl-client.s3.amazonaws.com/ISIC_copy_seg.png" alt="文件">
-                  </div>
-                  <h6>ISIC_0012346.jpg</h6>
-                  <h6 style="font-size:10px">Size: 2493191 B</h6>-->
                   <div>
                     <img src="../../assets/images/ajax-loader.gif" alt="loading">
                   </div>
@@ -79,89 +74,12 @@
       </div>
     </div>
   </header>
+
+
+<script src="../../assets/utils/js/jquery.js"></script>
 <script language="javascript" src="index.js"></script>
 <script>
-    initProjectName();
-    function initProjectName(){
-        $.ajax({
-            url: '/rest/config/project',
-            contentType: 'application/json',
-            dataType: "json",
-            type: "GET",
-            success: function(data) {
-                ajaxMessageReader(data,function (data) {
-                    var projectName1= $("#titleFirst");
-                    var projectName2 = $("#titleSecond");
-                    var title=data.split(" ");
-                    if(title.length>1){
-                        projectName2.html(title[1]);
-                    }
-                    projectName1.html(title[0]);
-                })
-            },
-            error: function (data) {
-                var projectName1= $("#titleFirst");
-                var projectName2 = $("#titleSecond");
-                projectName2.html("Segamentation");
-                projectName1.html("Lesion");
 
-            }
-        })
-    }
-
-
-
-    function changeProjectName(projectName) {
-        $.ajax({
-            url: '/rest/config/project',
-            contentType: 'application/json',
-            dataType: "json",
-            data:
-                JSON.stringify({
-                    name: projectName
-                }),
-            type: "PUT",
-            timeout: 0,
-            success: function(data){
-                ajaxMessageReader(data,function (data) {
-                })
-            },
-            error: function (data) {
-            }
-        })
-
-    }
-
-
-
-  $("#titleFirst").click(function () {
-
-      var td=$(this); //为后面文本框变成文本铺垫
-      var td2=$("#titleSecond");
-      var text=$(this).text();
-      var text2=$("#titleSecond").text();
-      var input=$('<input type="text" class="edit" value="'+text+' '+text2+'">');
-      $(this).html( input );
-
-      td2.hide();
-      $(input).click(function(){
-        return false;
-      }); //阻止表单默认点击行为
-
-      $(input).select(); //点击自动全选中表单的内容
-
-      $(input).blur(function(){
-          changeProjectName($(this).val());
-        var title=$(this).val().split(" ");
-        var nextxt=title[0];
-        if(title.length>1){
-          td2.html(title[1]);
-        }
-        td.html(nextxt);
-        td2.show();
-
-      }); //表单失去焦点文本框变成文本
-  })
   
 </script>
 
