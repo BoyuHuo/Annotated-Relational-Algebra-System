@@ -87,11 +87,11 @@ class QueryServiceImplTest {
 
 
 
-        System.out.println(queryService.toString(lTable));
-        System.out.println(queryService.toString(rTable));
+        System.out.println(lTable.toString());
+        System.out.println(rTable.toString());
 
        Table joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
-        System.out.println(queryService.toString(joinResult));
+        System.out.println(joinResult.toString());
 
         List<String> projectKeys = new ArrayList<String>() {{
             add("B");
@@ -100,7 +100,7 @@ class QueryServiceImplTest {
         }};
 
         Table projectResult = queryService.project(projectKeys, joinResult);
-        System.out.println(queryService.toString(projectResult));
+        System.out.println(projectResult.toString());
 
     }
 }

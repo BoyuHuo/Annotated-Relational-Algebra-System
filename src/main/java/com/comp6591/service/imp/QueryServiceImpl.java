@@ -9,22 +9,6 @@ import java.util.List;
 
 public class QueryServiceImpl implements QueryService {
 
-    public String toString(Table table) {
-        StringBuilder result = new StringBuilder();
-        table.getRecords().forEach(record -> {
-
-            record.getFields().forEach((key, value) -> {
-                result.append(key)
-                        .append(":")
-                        .append(value)
-                        .append(" ");
-            });
-
-            result.append("\n");
-        });
-        return result.toString();
-    }
-
     public Table naturalJoin(
             List<String> keys,
             Table lTable,
