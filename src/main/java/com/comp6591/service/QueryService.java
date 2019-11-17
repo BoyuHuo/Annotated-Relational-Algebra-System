@@ -11,7 +11,5 @@ public interface QueryService {
             Table lTable,
             Table rTable);
 
-    String toString(Table table);
-
     Table project(List<String> keys, Table table);
 }

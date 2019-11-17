@@ -15,4 +15,20 @@ import java.util.List;
 public class Table {
 
     List<Record> records = new ArrayList<>();
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        records.forEach(record -> {
+
+            record.getFields().forEach((key, value) -> {
+                result.append(key)
+                        .append(":")
+                        .append(value)
+                        .append(" ");
+            });
+
+            result.append("\n");
+        });
+        return result.toString();
+    }
 }
