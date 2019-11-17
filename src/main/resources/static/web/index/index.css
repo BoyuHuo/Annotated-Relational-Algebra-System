@@ -7,16 +7,13 @@ body,html{
     text-align: center;
 }
 .up-content {
-    min-height: 200px;
     border: 1px solid #CCCCCC;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #FAFAFA;
     color: #999;
     font-size: 20px;
-    text-align: center;
 }
 .up-area {
     border: 2px dashed #ccc;
