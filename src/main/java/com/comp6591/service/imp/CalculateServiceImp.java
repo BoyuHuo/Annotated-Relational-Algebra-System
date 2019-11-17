@@ -10,8 +10,7 @@ public class CalculateServiceImp implements CalculateService {
 
     @Override
     public List<Map<String, String>> probabilityCalculator(List<Map<String, String>> JoinedTable) {
-        JoinedTable.stream()
-                .parallel()
+        JoinedTable.parallelStream()
                 .forEach(row -> {
 
                     Float value = Float.valueOf(row.get("annotation"))
