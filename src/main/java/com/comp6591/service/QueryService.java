@@ -12,4 +12,5 @@ public interface QueryService {
 
     String toString(List<Map<String, String>> view);
 
+    List<Map<String, String>> project(List<String> keys, List<Map<String, String>> table);
 }
