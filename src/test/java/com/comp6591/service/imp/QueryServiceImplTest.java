@@ -83,15 +83,24 @@ class QueryServiceImplTest {
         rTable.add(rRecord3);
         rTable.add(rRecord4);
 
-        List<String> keys = new ArrayList<String>() {{
+        List<String> joinKeys = new ArrayList<String>() {{
                 add("B");
         }};
 
         System.out.println(queryService.toString(lTable));
         System.out.println(queryService.toString(rTable));
 
-        List<Map<String, String>> result = queryService.naturalJoin(keys,lTable,rTable);
-        System.out.println(queryService.toString(result));
+        List<Map<String, String>> joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
+        System.out.println(queryService.toString(joinResult));
+
+        List<String> projectKeys = new ArrayList<String>() {{
+            add("B");
+            add("C");
+            add("F");
+        }};
+
+        List<Map<String, String>> projectResult = queryService.project(projectKeys, joinResult);
+        System.out.println(queryService.toString(projectResult));
 
     }
 }

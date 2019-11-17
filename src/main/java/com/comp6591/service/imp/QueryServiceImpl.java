@@ -45,6 +45,23 @@ public class QueryServiceImpl implements QueryService {
         return result;
     }
 
+    public List<Map<String, String>> project(List<String> keys, List<Map<String, String>> table) {
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+        table.forEach(record -> {
+            Map<String, String> newRecord = new HashMap<>();
+            record.forEach((key, value) -> {
+                if(keys.contains(key)) {
+                    newRecord.put(key, value);
+                }
+            });
+            if (newRecord.size() > 0) {
+                result.add(newRecord);
+            }
+        });
+        return result;
+    }
+
     private boolean isEqual(List<String> keys, Map<String, String> lRecord, Map<String, String> rRecord) {
 
         for (int i = 0; i < keys.size(); i ++) {
