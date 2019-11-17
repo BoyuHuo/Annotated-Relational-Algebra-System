@@ -87,7 +87,7 @@ class QueryServiceImplTest {
 
 
 
-        System.out.println(queryService.toString());
+        System.out.println(queryService.toString(lTable));
         System.out.println(queryService.toString(rTable));
 
        Table joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
