@@ -1,6 +1,9 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.Table;
 import com.comp6591.service.CalculateService;
+import com.comp6591.utils.AnnotationType;
+import com.comp6591.utils.Constants;
 
 import java.util.List;
 import java.util.Map;
@@ -9,14 +12,16 @@ public class CalculateServiceImp implements CalculateService {
 
 
     @Override
-    public List<Map<String, String>> probabilityCalculator(List<Map<String, String>> JoinedTable) {
-        JoinedTable.parallelStream()
-                .forEach(row -> {
+    public Table probabilityCalculator(Table JoinedTable) {
+        JoinedTable.getRecords().parallelStream()
+                .forEach(record -> {
 
-                    Float value = Float.valueOf(row.get("annotation"))
-                            * Float.valueOf(row.get("annotaiton"));
+                    Float value = Float.valueOf(record.getFields().get(Constants.PROBABILITY_1))
+                            * Float.valueOf(record.getFields().get(Constants.PROBABILITY_2));
 
-                    row.put("annotation", String.valueOf(value));
+                    record.getFields().put(AnnotationType.PROBABILITY.name().toLowerCase(), String.valueOf(value));
+                    record.getFields().remove(Constants.PROBABILITY_1);
+                    record.getFields().remove(Constants.PROBABILITY_2);
                 });
 
         return JoinedTable;
@@ -25,7 +30,7 @@ public class CalculateServiceImp implements CalculateService {
 
 
     @Override
-    public List<Map<String, String>> annotationInit(List<Map<String, String>> data) {
+    public Table annotationInit(Table data) {
         initProbabilityAnnotation(data);
         //initBagsAnnotation();
         //initStanderedAnnotation();
@@ -34,9 +39,9 @@ public class CalculateServiceImp implements CalculateService {
         return data;
     }
 
-    private List<Map<String, String>> initProbabilityAnnotation(List<Map<String, String>> data) {
-        data.stream().forEach(row -> {
-            row.put("probability_annotation", Math.random() + "");
+    private Table initProbabilityAnnotation(Table data) {
+        data.getRecords().parallelStream().forEach(row -> {
+            row.getFields().put(AnnotationType.PROBABILITY.name().toLowerCase(), Math.random() + "");
         });
         return data;
     }
