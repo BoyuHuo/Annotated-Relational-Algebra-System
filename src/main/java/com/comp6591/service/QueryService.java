@@ -14,11 +14,5 @@ public interface QueryService {
 
     Table project(List<String> keys, Table table);
 
-    void buildInputStack(String input);
-
-    Stack<String> getInputStack();
-
-    Stack<Table> getTableStack();
-
-    void doQuery();
+    Stack<Table> doQuery(String query);
 }

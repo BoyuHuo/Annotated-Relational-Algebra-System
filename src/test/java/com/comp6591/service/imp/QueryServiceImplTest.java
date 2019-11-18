@@ -11,17 +11,6 @@ import java.util.*;
 class QueryServiceImplTest {
 
     @Test
-    void testBuildInputStack() {
-
-        QueryService queryService = new QueryServiceImpl();
-        String input = "project <A,C> (q join r)";
-        queryService.buildInputStack(input);
-        Stack<String> tokens = queryService.getInputStack();
-        tokens.forEach(System.out::println);
-
-    }
-
-    @Test
     void testQuery() {
 
         QueryService queryService = new QueryServiceImpl();
@@ -111,10 +100,9 @@ class QueryServiceImplTest {
 
         DataManager.getInstance().addDataTable("test",lTable);
 
-        queryService.buildInputStack("project <B,C> test");
-        queryService.doQuery();
+        Table result = queryService.doQuery("project <A,C> test").pop();
 
-        System.out.println(queryService.getTableStack().pop().toString());
+        System.out.println(result.toString());
 
     }
 }
