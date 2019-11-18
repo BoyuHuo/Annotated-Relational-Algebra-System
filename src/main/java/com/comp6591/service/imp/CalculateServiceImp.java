@@ -4,6 +4,7 @@ import com.comp6591.entity.Table;
 import com.comp6591.service.CalculateService;
 import com.comp6591.utils.AnnotationType;
 import com.comp6591.utils.Constants;
+import com.comp6591.utils.Util;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class CalculateServiceImp implements CalculateService {
 
     private Table initProbabilityAnnotation(Table data) {
         data.getRecords().parallelStream().forEach(row -> {
-            row.getFields().put(AnnotationType.PROBABILITY.name().toLowerCase(), Math.random() + "");
+            row.getFields().put(AnnotationType.PROBABILITY.name().toLowerCase(), Util.getRandomProbability());
         });
         return data;
     }
