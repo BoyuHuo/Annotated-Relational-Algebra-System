@@ -21,7 +21,10 @@ public class DataManager {
         this.data = data;
     }
 
-    public DataManager getInstance() {
+    synchronized public DataManager getInstance() {
+        if(instance == null){
+            instance = new DataManager();
+        }
         return instance;
     }
 
