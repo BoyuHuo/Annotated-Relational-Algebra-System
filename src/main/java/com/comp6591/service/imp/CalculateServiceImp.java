@@ -24,7 +24,34 @@ public class CalculateServiceImp implements CalculateService {
     }
 
 
+    @Override
+    public List<Map<String, String>> annotationInit(List<Map<String, String>> data) {
+        initProbabilityAnnotation(data);
+        //initBagsAnnotation();
+        //initStanderedAnnotation();
+        //initProvenancePolynomailsAnnotation()
 
+        return data;
+    }
+
+    private List<Map<String, String>> initProbabilityAnnotation(List<Map<String, String>> data) {
+        data.stream().forEach(row -> {
+            row.put("probability_annotation", Math.random() + "");
+        });
+        return data;
+    }
+
+    private List<Map<String, String>> initBagsAnnotation(List<Map<String, String>> data) {
+        return data;
+    }
+
+    private List<Map<String, String>> initStanderedAnnotation(List<Map<String, String>> data) {
+        return data;
+    }
+
+    private List<Map<String, String>> initProvenancePolynomailsAnnotation(List<Map<String, String>> data) {
+        return data;
+    }
 
 
 }
