@@ -1,5 +1,7 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.Record;
+import com.comp6591.entity.Table;
 import com.comp6591.service.FileService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,8 @@ public class FileServiceImp implements FileService {
 
     private final static String filePath = "src/main/resources/data";
 
-    public List<Map<String, String>> readData(String filename, String regex, String encoding) {
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+    public Table readData(String filename, String regex, String encoding) {
+        Table data = new Table();
         File file = new File(filePath+"/"+filename);
         String[] columnName;
         try {
@@ -29,12 +31,12 @@ public class FileServiceImp implements FileService {
             columnName = reader.readLine().split(regex);
             //get basket num and min support
             while ((line = reader.readLine()) != null) {
-                Map<String, String> dataLine = new HashMap<>();
+                Record dataLine = new Record();
                 String[] vals = line.split(regex);
                 for (int i = 0; i < vals.length; i++) {
-                    dataLine.put(columnName[i], vals[i]);
+                    dataLine.getFields().put(columnName[i], vals[i]);
                 }
-                data.add(dataLine);
+                data.getRecords().add(dataLine);
             }
             reader.close();
         } catch (Exception e) {

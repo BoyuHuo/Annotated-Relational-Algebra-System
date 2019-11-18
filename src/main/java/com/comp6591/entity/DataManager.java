@@ -1,24 +1,23 @@
 package com.comp6591.entity;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class DataManager {
-    private Map<String, List<Map<String, String>>> data;
+    private Map<String,Table> data;
     private static DataManager instance;
 
     private DataManager() {
-        data = new HashMap<String, List<Map<String, String>>>();
+        data = new HashMap<String, Table>();
     }
 
 
-    public Map<String, List<Map<String, String>>> getData() {
+    public Map<String, Table> getData() {
         return data;
     }
 
-    public void addDataTable(String tableName,List<Map<String, String>> data) {
+    public void addDataTable(String tableName,Table data) {
         this.data.put(tableName,data);
     }
 
