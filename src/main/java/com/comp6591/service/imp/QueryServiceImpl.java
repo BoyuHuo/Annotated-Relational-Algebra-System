@@ -35,18 +35,63 @@ public class QueryServiceImpl implements QueryService {
                 keys = new ArrayList<>(Arrays.asList(newKeys));
             } else if (token.endsWith("join")) {
                 Table rTable = tableStack.pop();
-                String lTableName = inputStack.pop();
-                Table lTable = DataManager.getInstance().getData().get(lTableName);
-                tableStack.push(naturalJoin(lTable, rTable));
+
+                String nextElement = inputStack.peek();
+                if (!nextElement.equals(")")) {
+                    String lTableName = inputStack.pop();
+                    Table lTable = DataManager.getInstance().getData().get(lTableName);
+                    tableStack.push(naturalJoin(lTable, rTable));
+                } else {
+                    String innerQuery = getInnerQuery(inputStack);
+                    tableStack.push(doQuery(innerQuery).pop());
+                    Table lTable = tableStack.pop();
+                    tableStack.push(naturalJoin(lTable, rTable));
+                }
+
             } else if (token.equals(")")) {
+                String innerQuery = getInnerQuery(inputStack);
+                tableStack.push(doQuery(innerQuery).pop());
 
             } else if (token.equals("(")) {
-
+                System.out.println("There must be something wrong...");
             } else {
                 tableStack.push(DataManager.getInstance().getData().get(token));
             }
         }
         return tableStack;
+    }
+
+    private String getInnerQuery(Stack<String> inputStack) {
+
+        int rBracket = 1;
+        int lBracket = 0;
+        Stack<String> innerQueryStack = new Stack<>();
+        while (!inputStack.empty()) {
+
+            String element = inputStack.pop();
+            if (element.equals("(")) {
+                ++ lBracket;
+                if (lBracket == rBracket) {
+                    break;
+                }
+            } else if (element.equals(")")) {
+                ++ rBracket;
+                innerQueryStack.push(element);
+            } else {
+                innerQueryStack.push(element);
+            }
+        }
+
+        return getInnerQueryFromStack(innerQueryStack);
+    }
+
+    private String getInnerQueryFromStack(Stack<String> innerQueryStack) {
+        StringBuilder result = new StringBuilder();
+        while (!innerQueryStack.empty()) {
+            result.append(innerQueryStack.pop());
+            result.append(" ");
+        }
+        return result.toString().trim();
     }
 
     private void buildInputStack(String input, Stack<String> inputStack) {
