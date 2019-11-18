@@ -3,6 +3,7 @@ package com.comp6591.entity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class DataManager {
     private Map<String, List<Map<String, String>>> data;
@@ -17,18 +18,19 @@ public class DataManager {
         return data;
     }
 
-    public void setData(Map<String, List<Map<String, String>>> data) {
-        this.data = data;
+    public void addDataTable(String tableName,List<Map<String, String>> data) {
+        this.data.put(tableName,data);
     }
 
-    synchronized public DataManager getInstance() {
+    synchronized static public DataManager getInstance() {
         if(instance == null){
             instance = new DataManager();
         }
         return instance;
     }
 
-    public void setInstance(DataManager instance) {
-        this.instance = instance;
+    public Set<String> getTableList(){
+        return instance.getData().keySet();
     }
+
 }

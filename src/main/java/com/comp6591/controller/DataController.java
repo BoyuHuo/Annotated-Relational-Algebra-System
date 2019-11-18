@@ -1,5 +1,6 @@
 package com.comp6591.controller;
 
+import com.comp6591.entity.DataManager;
 import com.comp6591.service.FileService;
 import com.comp6591.utils.Response;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +31,7 @@ public class DataController {
         Response.Builder responseBuilder = Response.getBuilder();
         String fileName = fileService.saveFile(file);
         List<Map<String, String>> data = fileService.readData(fileName, ",", "UTF-8");
-        System.out.println(data.size());
-
+        DataManager.getInstance().addDataTable(fileName,data);
         return responseBuilder.build();
     }
 }
