@@ -1,13 +1,47 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.DataManager;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
 import com.comp6591.utils.Util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class QueryServiceImpl implements QueryService {
+
+    private Stack<String> inputStack = new Stack<>();
+    private Stack<Table> tableStack = new Stack<>();
+
+    public void doQuery() {
+
+        //project <A,C> ( q join r )
+        List<String> keys = new ArrayList<>();
+
+        while (!inputStack.empty()) {
+
+            String token = inputStack.pop();
+            if (token.equals("project")) {
+                Table table = project(keys, tableStack.pop());
+                tableStack.push(table);
+            } else if (token.startsWith("<") && token.endsWith(">")) {
+                String[] newKeys = token.substring(1, token.length() - 1).split(",");
+                keys = new ArrayList<>(Arrays.asList(newKeys));
+            } else {
+                tableStack.push(DataManager.getInstance().getData().get(token));
+            }
+        }
+    }
+
+    public void buildInputStack(String input) {
+        String tokens[] = input.split(" ");
+        for (String token : tokens) {
+            inputStack.push(token);
+        }
+    }
 
     public Table naturalJoin(
             List<String> keys,
@@ -67,4 +101,11 @@ public class QueryServiceImpl implements QueryService {
         return result;
     }
 
+    public Stack<String> getInputStack() {
+        return inputStack;
+    }
+
+    public Stack<Table> getTableStack() {
+        return tableStack;
+    }
 }
