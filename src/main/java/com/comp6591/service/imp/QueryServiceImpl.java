@@ -33,6 +33,15 @@ public class QueryServiceImpl implements QueryService {
             } else if (token.startsWith("<") && token.endsWith(">")) {
                 String[] newKeys = token.substring(1, token.length() - 1).split(",");
                 keys = new ArrayList<>(Arrays.asList(newKeys));
+            } else if (token.endsWith("join")) {
+                Table rTable = tableStack.pop();
+                String lTableName = inputStack.pop();
+                Table lTable = DataManager.getInstance().getData().get(lTableName);
+                tableStack.push(naturalJoin(lTable, rTable));
+            } else if (token.equals(")")) {
+
+            } else if (token.equals("(")) {
+
             } else {
                 tableStack.push(DataManager.getInstance().getData().get(token));
             }
@@ -47,10 +56,20 @@ public class QueryServiceImpl implements QueryService {
         }
     }
 
-    public Table naturalJoin(
-            List<String> keys,
-            Table lTable,
-            Table rTable) {
+    public Table naturalJoin(Table lTable, Table rTable) {
+
+        List<String> keys = new ArrayList<>();
+        if (lTable.getRecords().size() == 0 || rTable.getRecords().size() == 0) {
+            return null;
+        }
+
+        lTable.getRecords().get(0).getFields().forEach((lKey, lValue) -> {
+            rTable.getRecords().get(0).getFields().forEach((rKey, rValue) -> {
+                if (lKey.equals(rKey)) {
+                    keys.add(lKey);
+                }
+            });
+        });
 
         Table result = new Table();
         lTable.getRecords().forEach(lRecord -> {
