@@ -13,10 +13,13 @@ import java.util.Stack;
 
 public class QueryServiceImpl implements QueryService {
 
-    private Stack<String> inputStack = new Stack<>();
-    private Stack<Table> tableStack = new Stack<>();
 
-    public void doQuery() {
+    public Stack<Table> doQuery(String input) {
+
+        Stack<String> inputStack = new Stack<>();
+        Stack<Table> tableStack = new Stack<>();
+
+        buildInputStack(input, inputStack);
 
         //project <A,C> ( q join r )
         List<String> keys = new ArrayList<>();
@@ -34,10 +37,11 @@ public class QueryServiceImpl implements QueryService {
                 tableStack.push(DataManager.getInstance().getData().get(token));
             }
         }
+        return tableStack;
     }
 
-    public void buildInputStack(String input) {
-        String tokens[] = input.split(" ");
+    private void buildInputStack(String input, Stack<String> inputStack) {
+        String[] tokens = input.split(" ");
         for (String token : tokens) {
             inputStack.push(token);
         }
@@ -101,11 +105,4 @@ public class QueryServiceImpl implements QueryService {
         return result;
     }
 
-    public Stack<String> getInputStack() {
-        return inputStack;
-    }
-
-    public Stack<Table> getTableStack() {
-        return tableStack;
-    }
 }
