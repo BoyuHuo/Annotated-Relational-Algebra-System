@@ -1,14 +1,16 @@
 package com.comp6591.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.comp6591.entity.Record;
 
 public class Util {
 
-    public static Map<String, String> deepCopyMap(Map<String, String> target) {
-        Map<String, String> copy = new HashMap<>();
+    public static Record deepCopyRecord(Record target) {
+        Record copy = new Record();
 
-        target.forEach(copy::put);
+        target.getFields().forEach((key, value) -> {
+            copy.getFields().put(key,value);
+        });
+
         return copy;
     }
 }

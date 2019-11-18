@@ -1,42 +1,25 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.Record;
+import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
 import com.comp6591.utils.Util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class QueryServiceImpl implements QueryService {
 
-    public String toString(List<Map<String, String>> view) {
-        StringBuilder result = new StringBuilder();
-        view.forEach(record -> {
-
-            record.forEach((key, value) -> {
-                result.append(key)
-                        .append(":")
-                        .append(value)
-                        .append(" ");
-            });
-
-            result.append("\n");
-        });
-        return result.toString();
-    }
-
-    public List<Map<String, String>> naturalJoin(
+    public Table naturalJoin(
             List<String> keys,
-            List<Map<String, String>> lTable,
-            List<Map<String, String>> rTable) {
+            Table lTable,
+            Table rTable) {
 
-        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-        lTable.forEach(lRecord -> {
-            rTable.forEach(rRecord -> {
+        Table result = new Table();
+        lTable.getRecords().forEach(lRecord -> {
+            rTable.getRecords().forEach(rRecord -> {
 
                 if (isEqual(keys, lRecord, rRecord)) {
-                    result.add(joinRecord(keys,lRecord,rRecord));
+                    result.getRecords().add(joinRecord(keys,lRecord,rRecord));
                 }
 
             });
@@ -45,27 +28,27 @@ public class QueryServiceImpl implements QueryService {
         return result;
     }
 
-    public List<Map<String, String>> project(List<String> keys, List<Map<String, String>> table) {
-        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+    public Table project(List<String> keys, Table table) {
+        Table result = new Table();
 
-        table.forEach(record -> {
-            Map<String, String> newRecord = new HashMap<>();
-            record.forEach((key, value) -> {
+        table.getRecords().forEach(record -> {
+            Record newRecord = new Record();
+            record.getFields().forEach((key, value) -> {
                 if(keys.contains(key)) {
-                    newRecord.put(key, value);
+                    newRecord.getFields().put(key, value);
                 }
             });
-            if (newRecord.size() > 0) {
-                result.add(newRecord);
+            if (newRecord.getFields().size() > 0) {
+                result.getRecords().add(newRecord);
             }
         });
         return result;
     }
 
-    private boolean isEqual(List<String> keys, Map<String, String> lRecord, Map<String, String> rRecord) {
+    private boolean isEqual(List<String> keys, Record lRecord, Record rRecord) {
 
         for (int i = 0; i < keys.size(); i ++) {
-            if (!lRecord.get(keys.get(i)).equals(rRecord.get(keys.get(i)))) {
+            if (!lRecord.getFields().get(keys.get(i)).equals(rRecord.getFields().get(keys.get(i)))) {
                 return false;
             }
         }
@@ -73,12 +56,12 @@ public class QueryServiceImpl implements QueryService {
         return true;
     }
 
-    private Map<String, String> joinRecord(List<String> keys, Map<String, String> lRecord, Map<String, String> rRecord) {
+    private Record joinRecord(List<String> keys, Record lRecord, Record rRecord) {
 
-        Map<String, String> result = Util.deepCopyMap(lRecord);
-        rRecord.forEach((key,value) -> {
+        Record result = Util.deepCopyRecord(lRecord);
+        rRecord.getFields().forEach((key,value) -> {
             if (!keys.contains(key)) {
-                result.put(key,rRecord.get(key));
+                result.getFields().put(key,rRecord.getFields().get(key));
             }
         });
         return result;

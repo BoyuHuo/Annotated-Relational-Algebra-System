@@ -1,16 +1,15 @@
 package com.comp6591.service;
 
+import com.comp6591.entity.Table;
+
 import java.util.List;
-import java.util.Map;
 
 public interface QueryService {
 
-    List<Map<String, String>> naturalJoin(
+    Table naturalJoin(
             List<String> keys,
-            List<Map<String, String>> lTable,
-            List<Map<String, String>> rTable);
+            Table lTable,
+            Table rTable);
 
-    String toString(List<Map<String, String>> view);
-
-    List<Map<String, String>> project(List<String> keys, List<Map<String, String>> table);
+    Table project(List<String> keys, Table table);
 }

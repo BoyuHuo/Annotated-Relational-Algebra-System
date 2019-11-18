@@ -1,27 +1,24 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.Record;
+import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.rmi.MarshalledObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class QueryServiceImplTest {
-
 
     @Test
     void naturalJoin() {
 
         QueryService queryService = new QueryServiceImpl();
 
-        List<Map<String, String>> lTable = new ArrayList<Map<String, String>>();
-        List<Map<String, String>> rTable = new ArrayList<Map<String, String>>();
+        Table lTable = new Table();
+        Table rTable = new Table();
 
         Map<String, String> lRecord1 = new HashMap<String, String>(){
             {
@@ -75,23 +72,26 @@ class QueryServiceImplTest {
             }
         };
 
-        lTable.add(lRecord1);
-        lTable.add(lRecord2);
-        lTable.add(lRecord3);
-        rTable.add(rRecord1);
-        rTable.add(rRecord2);
-        rTable.add(rRecord3);
-        rTable.add(rRecord4);
+        lTable.getRecords().add(new Record(lRecord1));
+        lTable.getRecords().add(new Record(lRecord2));
+        lTable.getRecords().add(new Record(lRecord3));
+
+        rTable.getRecords().add(new Record(rRecord1));
+        rTable.getRecords().add(new Record(rRecord2));
+        rTable.getRecords().add(new Record(rRecord3));
+        rTable.getRecords().add(new Record(rRecord4));
 
         List<String> joinKeys = new ArrayList<String>() {{
                 add("B");
         }};
 
-        System.out.println(queryService.toString(lTable));
-        System.out.println(queryService.toString(rTable));
 
-        List<Map<String, String>> joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
-        System.out.println(queryService.toString(joinResult));
+
+        System.out.println(lTable.toString());
+        System.out.println(rTable.toString());
+
+       Table joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
+        System.out.println(joinResult.toString());
 
         List<String> projectKeys = new ArrayList<String>() {{
             add("B");
@@ -99,8 +99,8 @@ class QueryServiceImplTest {
             add("F");
         }};
 
-        List<Map<String, String>> projectResult = queryService.project(projectKeys, joinResult);
-        System.out.println(queryService.toString(projectResult));
+        Table projectResult = queryService.project(projectKeys, joinResult);
+        System.out.println(projectResult.toString());
 
     }
 }
