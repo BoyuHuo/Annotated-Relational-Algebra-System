@@ -1,19 +1,28 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.DataManager;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class QueryServiceImplTest {
 
     @Test
-    void naturalJoin() {
+    void testBuildInputStack() {
+
+        QueryService queryService = new QueryServiceImpl();
+        String input = "project <A,C> (q join r)";
+        queryService.buildInputStack(input);
+        Stack<String> tokens = queryService.getInputStack();
+        tokens.forEach(System.out::println);
+
+    }
+
+    @Test
+    void testQuery() {
 
         QueryService queryService = new QueryServiceImpl();
 
@@ -85,12 +94,10 @@ class QueryServiceImplTest {
                 add("B");
         }};
 
-
-
         System.out.println(lTable.toString());
         System.out.println(rTable.toString());
 
-       Table joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
+        Table joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
         System.out.println(joinResult.toString());
 
         List<String> projectKeys = new ArrayList<String>() {{
@@ -101,6 +108,13 @@ class QueryServiceImplTest {
 
         Table projectResult = queryService.project(projectKeys, joinResult);
         System.out.println(projectResult.toString());
+
+        DataManager.getInstance().addDataTable("test",lTable);
+
+        queryService.buildInputStack("project <B,C> test");
+        queryService.doQuery();
+
+        System.out.println(queryService.getTableStack().pop().toString());
 
     }
 }
