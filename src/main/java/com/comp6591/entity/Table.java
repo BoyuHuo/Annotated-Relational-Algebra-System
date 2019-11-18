@@ -1,20 +1,19 @@
 package com.comp6591.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Table {
 
-    List<Record> records = new ArrayList<>();
+    private List<Record> records = new ArrayList<>();
 
     public String toString() {
         StringBuilder result = new StringBuilder();

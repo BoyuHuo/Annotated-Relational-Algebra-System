@@ -1,31 +1,35 @@
 package com.comp6591.entity;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class DataManager {
-    private Map<String, List<Map<String, String>>> data;
+    private Map<String,Table> data;
     private static DataManager instance;
 
     private DataManager() {
-        data = new HashMap<String, List<Map<String, String>>>();
+        data = new HashMap<String, Table>();
     }
 
 
-    public Map<String, List<Map<String, String>>> getData() {
+    public Map<String, Table> getData() {
         return data;
     }
 
-    public void setData(Map<String, List<Map<String, String>>> data) {
-        this.data = data;
+    public void addDataTable(String tableName,Table data) {
+        this.data.put(tableName,data);
     }
 
-    public DataManager getInstance() {
+    synchronized static public DataManager getInstance() {
+        if(instance == null){
+            instance = new DataManager();
+        }
         return instance;
     }
 
-    public void setInstance(DataManager instance) {
-        this.instance = instance;
+    public Set<String> getTableList(){
+        return instance.getData().keySet();
     }
+
 }
