@@ -7,10 +7,7 @@ import java.util.Stack;
 
 public interface QueryService {
 
-    Table naturalJoin(
-            List<String> keys,
-            Table lTable,
-            Table rTable);
+    Table naturalJoin(Table lTable, Table rTable);
 
     Table project(List<String> keys, Table table);
 

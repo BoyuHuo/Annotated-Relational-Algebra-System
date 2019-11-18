@@ -79,14 +79,11 @@ class QueryServiceImplTest {
         rTable.getRecords().add(new Record(rRecord3));
         rTable.getRecords().add(new Record(rRecord4));
 
-        List<String> joinKeys = new ArrayList<String>() {{
-                add("B");
-        }};
 
         System.out.println(lTable.toString());
         System.out.println(rTable.toString());
 
-        Table joinResult = queryService.naturalJoin(joinKeys,lTable,rTable);
+        Table joinResult = queryService.naturalJoin(lTable,rTable);
         System.out.println(joinResult.toString());
 
         List<String> projectKeys = new ArrayList<String>() {{
@@ -98,9 +95,10 @@ class QueryServiceImplTest {
         Table projectResult = queryService.project(projectKeys, joinResult);
         System.out.println(projectResult.toString());
 
-        DataManager.getInstance().addDataTable("test",lTable);
+        DataManager.getInstance().addDataTable("test1",lTable);
+        DataManager.getInstance().addDataTable("test2", rTable);
 
-        Table result = queryService.doQuery("project <A,C> test").pop();
+        Table result = queryService.doQuery("project <B,F> ( test1 join test2 )").pop();
 
         System.out.println(result.toString());
 
