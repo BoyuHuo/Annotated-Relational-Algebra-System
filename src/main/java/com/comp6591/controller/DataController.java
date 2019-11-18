@@ -1,7 +1,6 @@
 package com.comp6591.controller;
 
 import com.comp6591.entity.DataManager;
-import com.comp6591.entity.Query;
 import com.comp6591.entity.Table;
 import com.comp6591.service.FileService;
 import com.comp6591.utils.Response;

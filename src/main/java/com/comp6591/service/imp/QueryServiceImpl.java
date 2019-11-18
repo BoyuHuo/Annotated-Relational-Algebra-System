@@ -5,12 +5,15 @@ import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
 import com.comp6591.utils.Util;
+import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+@Service
 public class QueryServiceImpl implements QueryService {
 
 
@@ -32,7 +35,11 @@ public class QueryServiceImpl implements QueryService {
                 tableStack.push(table);
             } else if (token.startsWith("<") && token.endsWith(">")) {
                 String[] newKeys = token.substring(1, token.length() - 1).split(",");
+                Arrays.stream(newKeys).forEach((str) -> {
+                    str.replace(" ", "");
+                });
                 keys = new ArrayList<>(Arrays.asList(newKeys));
+
             } else if (token.endsWith("join")) {
                 Table rTable = tableStack.pop();
                 String lTableName = inputStack.pop();
@@ -76,7 +83,7 @@ public class QueryServiceImpl implements QueryService {
             rTable.getRecords().forEach(rRecord -> {
 
                 if (isEqual(keys, lRecord, rRecord)) {
-                    result.getRecords().add(joinRecord(keys,lRecord,rRecord));
+                    result.getRecords().add(joinRecord(keys, lRecord, rRecord));
                 }
 
             });
@@ -91,7 +98,7 @@ public class QueryServiceImpl implements QueryService {
         table.getRecords().forEach(record -> {
             Record newRecord = new Record();
             record.getFields().forEach((key, value) -> {
-                if(keys.contains(key)) {
+                if (keys.contains(key.trim())) {
                     newRecord.getFields().put(key, value);
                 }
             });
@@ -104,7 +111,7 @@ public class QueryServiceImpl implements QueryService {
 
     private boolean isEqual(List<String> keys, Record lRecord, Record rRecord) {
 
-        for (int i = 0; i < keys.size(); i ++) {
+        for (int i = 0; i < keys.size(); i++) {
             if (!lRecord.getFields().get(keys.get(i)).equals(rRecord.getFields().get(keys.get(i)))) {
                 return false;
             }
@@ -116,9 +123,9 @@ public class QueryServiceImpl implements QueryService {
     private Record joinRecord(List<String> keys, Record lRecord, Record rRecord) {
 
         Record result = Util.deepCopyRecord(lRecord);
-        rRecord.getFields().forEach((key,value) -> {
+        rRecord.getFields().forEach((key, value) -> {
             if (!keys.contains(key)) {
-                result.getFields().put(key,rRecord.getFields().get(key));
+                result.getFields().put(key, rRecord.getFields().get(key));
             }
         });
         return result;

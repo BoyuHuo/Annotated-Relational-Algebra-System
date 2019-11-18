@@ -20,7 +20,7 @@ public class FileServiceImp implements FileService {
 
     public Table readData(String filename, String regex, String encoding) {
         Table data = new Table();
-        File file = new File(filePath+"/"+filename);
+        File file = new File(filePath + "/" + filename);
         String[] columnName;
         try {
             FileInputStream inStream = new FileInputStream(file);
@@ -34,7 +34,7 @@ public class FileServiceImp implements FileService {
                 Record dataLine = new Record();
                 String[] vals = line.split(regex);
                 for (int i = 0; i < vals.length; i++) {
-                    dataLine.getFields().put(columnName[i], vals[i]);
+                    dataLine.getFields().put(columnName[i], vals[i].trim());
                 }
                 data.getRecords().add(dataLine);
             }
