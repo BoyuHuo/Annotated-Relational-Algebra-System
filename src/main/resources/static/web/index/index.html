@@ -9,53 +9,6 @@
     <link rel="stylesheet" href="../../assets/utils/css/carousel.css">
 
     <link rel="stylesheet" href="index.css">
-    <style>
-        /* 下拉按钮样式 */
-        .dropbtn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* 容器 <div> - 需要定位下拉内容 */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* 下拉内容 (默认隐藏) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        }
-
-        /* 下拉菜单的链接 */
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        /* 鼠标移上去后修改下拉菜单链接颜色 */
-        .dropdown-content a:hover {background-color: #f1f1f1}
-
-        /* 在鼠标移上去后显示下拉菜单 */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* 当下拉内容显示后修改下拉按钮的背景颜色 */
-        .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
-        }
-    </style>
 
 </head>
 
@@ -88,30 +41,12 @@
 
 <header id="header" class="page-header">
     <div class="row">
-        <!-- 拖拽图片到这来 -->
-        <div class="col-md-6  up-content  dragFile">
-            <p style="margin-top:10px;">Data (You can drag your data here)</p>
-            <div class="up-area">
-                <input type="file" style="display:none;" id="fileDrag" name="fileDragselect" multiple>
-                <div class="row">
-                    <ul id="testList" class="list-group clearfix list-drag list-btn">
-                    </ul>
-                </div>
-            </div>
-            <div class="btn">
-                <button type="button" class="btn btn-success" id="btn">Browse your File</button>
-                <input type="file" style="display:none;" id="fileInput" name="fileselect" multiple>
-                <button type="button" class="btn btn-primary" onclick="modelTest()">Upload</button>
-            </div>
-
-
-        </div>
         <!-- 点击按钮上传文件 -->
-        <div class="col-md-6 up-content btnFile">
+        <div class="col-md-12 up-content btnFile">
             <p style="margin-top:10px;">Result</p>
             <div class="up-area">
                 <div class="row">
-                    <ul id="resultList" class="list-group clearfix list-btn">
+                    <ul id="resultList" class="list-group clearfix list-btn" style="width:90%;">
                         <li class="list-group-item" id="segamentationLoading" style="display: none">
                             <div>
                                 <img src="../../assets/images/ajax-loader.gif" alt="loading">
@@ -127,8 +62,41 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 up-content">
+
+    <div class="row" style="height: 350px">
+        <!-- 拖拽图片到这来 -->
+        <div class="col-md-3  up-content  dragFile">
+            <p style="margin-top:10px;">Data Input</p>
+            <div class="col-md-12">
+                <div class="up-area col-md-12">
+                    <input type="file" style="display:none;" id="fileDrag" name="fileDragselect" multiple>
+                    <div class="row">
+                        <ul id="testList" class="list-group clearfix list-drag list-btn">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="btn">
+                <button type="button" class="btn btn-success" id="btn">Browse your File</button>
+                <input type="file" style="display:none;" id="fileInput" name="fileselect" multiple>
+                <button type="button" class="btn btn-primary" onclick="modelTest()">Upload</button>
+            </div>
+        </div>
+
+        <div class="col-md-3  up-content  dragFile">
+            <p style="margin-top:10px;">Table List</p>
+            <div class="col-md-12" style="height:80%; overflow:auto">
+                <ul  id="datalist" class="list-group" style="width: 90%;font: 15px bold"  >
+                    <li class="list-group-item">P.txt</li>
+                    <li class="list-group-item">Q.txt</li>
+                    <li class="list-group-item">Product.txt</li>
+                    <li class="list-group-item">Shop.txt</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-md-6 up-content">
             <div class=" col-md-4"> <p style>Query</p></div>
             <textarea class="col-md-11" style="" rows="2" cols="50" id="query"></textarea>
 
@@ -140,7 +108,7 @@
                 <option value="standard">Standard</option>
             </select>
 
-            <button type="button" class="btn btn-primary" onclick="sendQuery()">Submit</button>
+            <button type="button" class="btn btn-primary offset-10" onclick="sendQuery()">Submit</button>
         </div>
     </div>
     </div>

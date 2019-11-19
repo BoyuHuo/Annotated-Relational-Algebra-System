@@ -13,8 +13,8 @@ function modelTest() {
         processData: false,//这两个一定设置为false
         success: function (data) {
             ajaxMessageReader(data, function (data) {
-                appendURLFile(data['url'], "#resultList",data['eta']);
-                alert("Result has been returned!");
+                let fileName = data.data;
+                $("#datalist").append("<li class=\"list-group-item\">"+ fileName+"</li>")
             })
         },
         complete: function (XMLHttpRequest, textStatus) {

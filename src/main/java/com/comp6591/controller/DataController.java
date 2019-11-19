@@ -24,6 +24,16 @@ public class DataController {
         String fileName = fileService.saveFile(file);
         Table data = fileService.readData(fileName, ",", "UTF-8");
         DataManager.getInstance().addDataTable(fileName,data);
+        return responseBuilder.setData(fileName).build();
+    }
+
+    @ResponseBody
+    @RequestMapping(path = "datalist" ,method = RequestMethod.POST)
+    public final Response getDataList(@RequestParam("file") MultipartFile file) {
+        Response.Builder responseBuilder = Response.getBuilder();
+        String fileName = fileService.saveFile(file);
+        Table data = fileService.readData(fileName, ",", "UTF-8");
+        DataManager.getInstance().addDataTable(fileName,data);
         return responseBuilder.build();
     }
 

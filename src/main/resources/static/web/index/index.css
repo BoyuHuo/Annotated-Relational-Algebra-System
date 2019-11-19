@@ -18,9 +18,8 @@ body,html{
 .up-area {
     border: 2px dashed #ccc;
     margin: 10px 20px 20px 20px;
-    width: 300px;
+    width: 90%;
     min-height: 200px;
-    line-height: 100px;
     background-color: #fff;
 }
 .list-group {
@@ -38,4 +37,8 @@ img {
 .close {
     margin-left: 550px;
     margin-top: -20px;
+}
+
+table, th, td {
+    border: 1px solid black;
 }
