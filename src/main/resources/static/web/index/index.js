@@ -1,3 +1,5 @@
+getDatalist();
+
 function modelTest() {
     var formData = new FormData();
     formData.append("file", document.getElementById("fileInput").files[0]);
@@ -12,10 +14,7 @@ function modelTest() {
         contentType: false,//这里
         processData: false,//这两个一定设置为false
         success: function (data) {
-            ajaxMessageReader(data, function (data) {
-                let fileName = data.data;
-                $("#datalist").append("<li class=\"list-group-item\">"+ fileName+"</li>")
-            })
+            getDatalist();
         },
         complete: function (XMLHttpRequest, textStatus) {
             $("#segamentationLoading").hide();
@@ -117,6 +116,27 @@ function sendQuery() {
             $("#segamentationLoading").hide();
             table.show();
 
+        }
+    })
+}
+
+function getDatalist() {
+    $.ajax({
+        url: '/rest/data/datalist',
+        contentType: 'application/json',
+        dataType: "json",
+        type: "GET",
+        timeout: 0,
+        success: function (data) {
+            mydata = data;
+            var datalist = $("#datalist").empty();
+            if(data.data.length > 0){
+                for(var d in data.data){
+                    datalist.append(" <li class=\"list-group-item\">"+data.data[d]+"</li>");
+                }
+            }else{
+                datalist.append("  <li class=\"list-group-item\">No Data</li>");
+            }
         }
     })
 }
