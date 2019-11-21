@@ -3,15 +3,10 @@ package com.comp6591.service.imp;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.FileService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class FileServiceImp implements FileService {
