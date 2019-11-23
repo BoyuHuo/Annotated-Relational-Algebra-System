@@ -36,7 +36,7 @@ public class ProbabilityCalculator implements CalcultorStrategyInterface {
         str = StringUtils.remove(str, ')');
         return str;
     }
-    
+
 
 
 
