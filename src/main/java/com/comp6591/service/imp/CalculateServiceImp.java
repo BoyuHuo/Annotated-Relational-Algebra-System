@@ -35,7 +35,7 @@ public class CalculateServiceImp implements CalculateService {
         initProbabilityAnnotation(data);
         //initBagsAnnotation();
         //initStanderedAnnotation();
-        //initProvenancePolynomailsAnnotation()
+        //initProvenancePolynomilesAnnotation()
 
         return data;
     }
