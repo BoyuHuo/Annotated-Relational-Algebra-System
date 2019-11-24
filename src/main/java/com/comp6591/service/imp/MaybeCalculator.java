@@ -34,7 +34,12 @@ public class MaybeCalculator implements CalcultorStrategyInterface {
         if (plStack.size() != 1) {
             throw new RuntimeException("Error occurs in calculte the Bag semantics!");
         } else {
-            return String.valueOf(plStack.pop());
+            String result = plStack.pop();
+            if (result.equals(Boolean.toString(false))) {
+                return "0";
+            } else {
+                return "1";
+            }
         }
     }
 
@@ -57,7 +62,7 @@ public class MaybeCalculator implements CalcultorStrategyInterface {
 
     private boolean strToBool(String str) {
 
-        return Boolean.valueOf(Util.isTag(str)? Constants.TAGS.get(str) : str);
+        return Util.isTag(str)? Constants.TAGS.get(str).getMayBe() : Boolean.valueOf(str);
     }
 
 }

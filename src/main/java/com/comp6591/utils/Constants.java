@@ -1,11 +1,13 @@
 package com.comp6591.utils;
 
+import com.comp6591.entity.Annotation;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
 
-    public static Map<String, String> TAGS = new HashMap<>();
+    public static Map<String, Annotation> TAGS = new HashMap<>();
 
     public static final String BAG_1 = "bag1";
 

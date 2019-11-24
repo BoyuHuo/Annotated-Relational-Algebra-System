@@ -3,9 +3,11 @@ package com.comp6591.service.imp;
 import com.comp6591.service.CalcultorStrategyInterface;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
-
+import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Stack;
 
+
+@SpringBootTest
 public class BagCalculator implements CalcultorStrategyInterface {
 
     @Override
@@ -55,6 +57,6 @@ public class BagCalculator implements CalcultorStrategyInterface {
 
     private Integer strToNum(String str) {
 
-        return Integer.valueOf(Util.isTag(str)? Constants.TAGS.get(str) : str);
+        return Util.isTag(str)? Constants.TAGS.get(str).getBag() : Integer.valueOf(str);
     }
 }

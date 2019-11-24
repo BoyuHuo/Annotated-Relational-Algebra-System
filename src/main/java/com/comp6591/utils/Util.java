@@ -46,6 +46,6 @@ public class Util {
 
     public static boolean isTag(String str) {
 
-        return str.startsWith("t")? true : false;
+        return str.startsWith("tag")? true : false;
     }
 }
