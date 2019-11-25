@@ -17,6 +17,7 @@ class QueryServiceImplTest {
 
         Table lTable = new Table();
         Table rTable = new Table();
+        Table mTable = new Table();
 
         Map<String, String> lRecord1 = new HashMap<String, String>(){
             {
@@ -70,6 +71,27 @@ class QueryServiceImplTest {
             }
         };
 
+        Map<String, String> mRecord1 = new HashMap<String, String>(){
+            {
+                put("F", "9");
+                put("G", "2");
+            }
+        };
+
+        Map<String, String> mRecord2 = new HashMap<String, String>(){
+            {
+                put("F", "1");
+                put("G", "3");
+            }
+        };
+
+        Map<String, String> mRecord3 = new HashMap<String, String>(){
+            {
+                put("F", "2");
+                put("G", "4");
+            }
+        };
+
         lTable.getRecords().add(new Record(lRecord1));
         lTable.getRecords().add(new Record(lRecord2));
         lTable.getRecords().add(new Record(lRecord3));
@@ -79,12 +101,17 @@ class QueryServiceImplTest {
         rTable.getRecords().add(new Record(rRecord3));
         rTable.getRecords().add(new Record(rRecord4));
 
+        mTable.getRecords().add(new Record(mRecord1));
+        mTable.getRecords().add(new Record(mRecord2));
+        mTable.getRecords().add(new Record(mRecord3));
+
 
         System.out.println(lTable.toString());
         System.out.println(rTable.toString());
 
         Table joinResult = queryService.naturalJoin(lTable,rTable);
         System.out.println(joinResult.toString());
+        DataManager.getInstance().addDataTable("lrTable",joinResult);
 
         List<String> projectKeys = new ArrayList<String>() {{
             add("B");
@@ -97,10 +124,16 @@ class QueryServiceImplTest {
 
         DataManager.getInstance().addDataTable("test1",lTable);
         DataManager.getInstance().addDataTable("test2", rTable);
+        DataManager.getInstance().addDataTable("test3", mTable);
 
-        Table result = queryService.doQuery("project <B,F> ( test1 join test2 )").pop();
+        Table result1 = queryService.doQuery("project <B,F> ( test1 join test2 )").pop();
+        System.out.println(result1.toString());
 
-        System.out.println(result.toString());
+        Table result2 = queryService.doQuery("project <A,B,C,F,G> ( lrTable join test3 )").pop();
+        System.out.println(result2.toString());
+
+        Table result3 = queryService.doQuery("project <A,B,C,F,G> ( ( test1 join test2 ) join test3 )").pop();
+        System.out.println(result3.toString());
 
     }
 }
