@@ -3,15 +3,10 @@ package com.comp6591.service.imp;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.FileService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class FileServiceImp implements FileService {
@@ -20,7 +15,7 @@ public class FileServiceImp implements FileService {
 
     public Table readData(String filename, String regex, String encoding) {
         Table data = new Table();
-        File file = new File(filePath+"/"+filename);
+        File file = new File(filePath + "/" + filename);
         String[] columnName;
         try {
             FileInputStream inStream = new FileInputStream(file);
@@ -34,7 +29,7 @@ public class FileServiceImp implements FileService {
                 Record dataLine = new Record();
                 String[] vals = line.split(regex);
                 for (int i = 0; i < vals.length; i++) {
-                    dataLine.getFields().put(columnName[i], vals[i]);
+                    dataLine.getFields().put(columnName[i], vals[i].trim());
                 }
                 data.getRecords().add(dataLine);
             }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../assets/utils/css/carousel.css">
 
     <link rel="stylesheet" href="index.css">
+
 </head>
 
 <body>
@@ -40,14 +41,39 @@
 
 <header id="header" class="page-header">
     <div class="row">
-        <!-- 拖拽图片到这来 -->
-        <div class="col-md-6  up-content  dragFile">
-            <p style="margin-top:10px;">Data (You can drag your data here)</p>
+        <!-- 点击按钮上传文件 -->
+        <div class="col-md-12 up-content btnFile">
+            <p style="margin-top:10px;">Result</p>
             <div class="up-area">
-                <input type="file" style="display:none;" id="fileDrag" name="fileDragselect" multiple>
                 <div class="row">
-                    <ul id="testList" class="list-group clearfix list-drag list-btn">
+                    <ul id="resultList" class="list-group clearfix list-btn" style="width:90%;">
+                        <li class="list-group-item" id="segamentationLoading" style="display: none">
+                            <div>
+                                <img src="../../assets/images/ajax-loader.gif" alt="loading">
+                            </div>
+                        </li>
+
+                        <table id="resultTable" style="display: none;">
+                            
+                        </table>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" style="height: 350px">
+        <!-- 拖拽图片到这来 -->
+        <div class="col-md-3  up-content  dragFile">
+            <p style="margin-top:10px;">Data Input</p>
+            <div class="col-md-12">
+                <div class="up-area col-md-12">
+                    <input type="file" style="display:none;" id="fileDrag" name="fileDragselect" multiple>
+                    <div class="row">
+                        <ul id="testList" class="list-group clearfix list-drag list-btn">
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="btn">
@@ -55,31 +81,31 @@
                 <input type="file" style="display:none;" id="fileInput" name="fileselect" multiple>
                 <button type="button" class="btn btn-primary" onclick="modelTest()">Upload</button>
             </div>
-
-
         </div>
-        <!-- 点击按钮上传文件 -->
-        <div class="col-md-6 up-content btnFile">
-            <p style="margin-top:10px;">Result</p>
-            <div class="up-area">
-                <div class="row">
-                    <ul id="resultList" class="list-group clearfix list-btn">
-                        <li class="list-group-item" id="segamentationLoading" style="display: none">
-                            <div>
-                                <img src="../../assets/images/ajax-loader.gif" alt="loading">
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+
+        <div class="col-md-3  up-content  dragFile">
+            <p style="margin-top:10px;">Table List</p>
+            <div class="col-md-12" style="height:80%; overflow:auto">
+                <ul  id="datalist" class="list-group" style="width: 90%;font: 15px bold"  >
+                    <li class="list-group-item">P.txt</li>
+                </ul>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div id="query" class="col-md-12 up-content">
-            <p style>Query</p>
-            <textarea class="col-md-11" style="" rows="2" cols="50"></textarea>
-            <button type="button" class="btn btn-primary" onclick="modelTest()">Submit</button>
+        </div>
+
+        <div class="col-md-6 up-content">
+            <div class=" col-md-4"> <p style>Query</p></div>
+            <textarea class="col-md-11" style="" rows="2" cols="50" id="query"></textarea>
+
+            <select id="query-type" class="form-control col-md-4">
+                <option value="probability">Probability</option>
+                <option value="certainty">Certainty</option>
+                <option value="bags">Bags</option>
+                <option value="polinomail">Polinomail</option>
+                <option value="standard">Standard</option>
+            </select>
+
+            <button type="button" class="btn btn-primary offset-10" onclick="sendQuery()">Submit</button>
         </div>
     </div>
     </div>

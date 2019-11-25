@@ -1,6 +1,13 @@
 package com.comp6591.utils;
 
+import com.comp6591.entity.Annotation;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
+
+    public static Map<String, Annotation> TAGS = new HashMap<>();
 
     public static final String BAG_1 = "bag1";
 
@@ -21,6 +28,12 @@ public class Constants {
     public static final String POLYNOMIAL_1 = "polynomial1";
 
     public static final String POLYNOMIAL_2 = "polynomial2";
+
+    public static final String DOT = "x";
+
+    public static final String ADD = "+";
+
+
 
 
 }

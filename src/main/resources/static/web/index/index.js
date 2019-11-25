@@ -1,3 +1,5 @@
+getDatalist();
+
 function modelTest() {
     var formData = new FormData();
     formData.append("file", document.getElementById("fileInput").files[0]);
@@ -12,10 +14,7 @@ function modelTest() {
         contentType: false,//这里
         processData: false,//这两个一定设置为false
         success: function (data) {
-            ajaxMessageReader(data, function (data) {
-                appendURLFile(data['url'], "#resultList",data['eta']);
-                alert("Result has been returned!");
-            })
+            getDatalist();
         },
         complete: function (XMLHttpRequest, textStatus) {
             $("#segamentationLoading").hide();
@@ -74,12 +73,70 @@ function appendURLFile(url, listName,eta) {
     $(listName)[0].innerHTML = liStr;
 }
 
-function ajaxMessageReader(response, func) {
-    if (response.code == "200") {
-        func(response.data);
-    } else {
-        alert(response.get("message"));
-    }
 
-    /*		func(response);*/
+var mydata;
+
+function sendQuery() {
+    $.ajax({
+        url: '/rest/query',
+        contentType: 'application/json',
+        dataType: "json",
+        type: "POST",
+        timeout: 0,
+        data: JSON.stringify({
+            "query": $("#query").val(),
+            "type": $("#query-type option:selected").val()
+        }),
+        success: function (data) {
+            mydata = data.data.records;
+
+            var table = $("#resultTable");
+            var header = "<thead>";
+            if(mydata.length<0){
+                return;
+            }
+            for(var k in mydata[0].fields){
+                header += "<th>"+k+"</th>"
+            }
+            header += "<th>"+"Annotation"+"</th>"
+            header+= "</thead>";
+            table.append(header);
+
+
+            for(var d in mydata){
+                var tr ="<tr>";
+
+                for(var k in mydata[d].fields){
+                    tr+="<td>"+ mydata[d].fields[k]+"</td>";
+                }
+                tr+="<td>"+ 0.5+"</td>";
+                tr+= "</tr>";
+                table.append(tr);
+            }
+            $("#segamentationLoading").hide();
+            table.show();
+
+        }
+    })
+}
+
+function getDatalist() {
+    $.ajax({
+        url: '/rest/data/datalist',
+        contentType: 'application/json',
+        dataType: "json",
+        type: "GET",
+        timeout: 0,
+        success: function (data) {
+            mydata = data;
+            var datalist = $("#datalist").empty();
+            if(data.data.length > 0){
+                for(var d in data.data){
+                    datalist.append(" <li class=\"list-group-item\">"+data.data[d]+"</li>");
+                }
+            }else{
+                datalist.append("  <li class=\"list-group-item\">No Data</li>");
+            }
+        }
+    })
 }
