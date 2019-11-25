@@ -7,7 +7,6 @@ import com.comp6591.service.QueryService;
 import com.comp6591.utils.Util;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -147,8 +146,19 @@ public class QueryServiceImpl implements QueryService {
                     newRecord.getFields().put(key, value);
                 }
             });
-            if (newRecord.getFields().size() > 0) {
+            if (newRecord.getFields().size() > 0 && !recordInTable(result, newRecord)) {
                 result.getRecords().add(newRecord);
+            }
+        });
+        return result;
+    }
+
+    public Table union(Table lTable, Table rTable) {
+        Table result = new Table();
+        result.getRecords().addAll(lTable.getRecords());
+        rTable.getRecords().forEach(record -> {
+            if (!recordInTable(result, record)) {
+                result.getRecords().add(record);
             }
         });
         return result;
@@ -174,6 +184,16 @@ public class QueryServiceImpl implements QueryService {
             }
         });
         return result;
+    }
+
+    private boolean recordInTable(Table table, Record candidateRecord) {
+
+        for (Record record : table.getRecords()) {
+            if (record.getFields().equals(candidateRecord.getFields())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

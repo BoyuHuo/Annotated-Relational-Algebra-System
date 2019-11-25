@@ -18,6 +18,7 @@ class QueryServiceImplTest {
         Table lTable = new Table();
         Table rTable = new Table();
         Table mTable = new Table();
+        Table nTable = new Table();
 
         Map<String, String> lRecord1 = new HashMap<String, String>(){
             {
@@ -92,6 +93,21 @@ class QueryServiceImplTest {
             }
         };
 
+        Map<String, String> nRecord1 = new HashMap<String, String>(){
+            {
+                put("F", "1");
+                put("G", "3");
+            }
+        };
+
+        Map<String, String> nRecord2 = new HashMap<String, String>(){
+            {
+                put("F", "3");
+                put("G", "5");
+            }
+        };
+
+
         lTable.getRecords().add(new Record(lRecord1));
         lTable.getRecords().add(new Record(lRecord2));
         lTable.getRecords().add(new Record(lRecord3));
@@ -104,6 +120,9 @@ class QueryServiceImplTest {
         mTable.getRecords().add(new Record(mRecord1));
         mTable.getRecords().add(new Record(mRecord2));
         mTable.getRecords().add(new Record(mRecord3));
+
+        nTable.getRecords().add(new Record(nRecord1));
+        nTable.getRecords().add(new Record(nRecord2));
 
 
         System.out.println(lTable.toString());
@@ -126,7 +145,7 @@ class QueryServiceImplTest {
         DataManager.getInstance().addDataTable("test2", rTable);
         DataManager.getInstance().addDataTable("test3", mTable);
 
-        Table result1 = queryService.doQuery("project <B,F> ( test1 join test2 )").pop();
+        Table result1 = queryService.doQuery("project <B,C> ( test1 join test2 )").pop();
         System.out.println(result1.toString());
 
         Table result2 = queryService.doQuery("project <A,B,C,F,G> ( lrTable join test3 )").pop();
@@ -135,5 +154,6 @@ class QueryServiceImplTest {
         Table result3 = queryService.doQuery("project <A,B,C,F,G> ( ( test1 join test2 ) join test3 )").pop();
         System.out.println(result3.toString());
 
+        System.out.println(queryService.union(mTable, nTable).toString());
     }
 }
