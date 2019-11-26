@@ -56,7 +56,7 @@ public class CertaintyCalculator implements CalcultorStrategyInterface {
 
     private float strToFloat(String str) {
 
-        return Float.valueOf(Util.isTag(str)? Constants.TAGS.get(str) : str);
+        return Util.isTag(str)? Constants.TAGS.get(str).getCertainty() : Float.valueOf(str);
     }
 
 }
