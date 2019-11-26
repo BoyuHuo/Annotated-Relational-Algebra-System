@@ -1,6 +1,6 @@
 package com.comp6591.service.imp;
 
-import com.comp6591.service.CalcultorStrategyInterface;
+import com.comp6591.service.CalcultorStrategy;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,7 +8,7 @@ import java.util.Stack;
 
 
 @SpringBootTest
-public class BagCalculator implements CalcultorStrategyInterface {
+public class BagCalculator implements CalcultorStrategy {
 
     @Override
     public String getValue(String polynomial) {

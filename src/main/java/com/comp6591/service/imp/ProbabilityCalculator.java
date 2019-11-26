@@ -1,7 +1,7 @@
 /*
 package com.comp6591.service.imp;
 
-import com.comp6591.service.CalcultorStrategyInterface;
+import com.comp6591.service.CalcultorStrategy;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
 import org.apache.commons.lang3.StringUtils;
@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-public class ProbabilityCalculator implements CalcultorStrategyInterface {
+public class ProbabilityCalculator implements CalcultorStrategy {
 
 
     @Override

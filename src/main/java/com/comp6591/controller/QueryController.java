@@ -26,7 +26,7 @@ public class QueryController {
     public final Response excuteQuery(@RequestBody Query param) {
         System.out.println(param.getQuery() + ":" + param.getType());
 
-        Table result = queryService.doQuery(param.getQuery()).pop();
+        Table result = queryService.doQuery(param.getQuery(),param.getType()).pop();
 
         if(param.isFileAsResult()){
 

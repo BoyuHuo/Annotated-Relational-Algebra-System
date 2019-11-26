@@ -1,12 +1,12 @@
 package com.comp6591.service.imp;
 
-import com.comp6591.service.CalcultorStrategyInterface;
+import com.comp6591.service.CalcultorStrategy;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
 
 import java.util.Stack;
 
-public class MaybeCalculator implements CalcultorStrategyInterface {
+public class MaybeCalculator implements CalcultorStrategy {
 
 
     @Override

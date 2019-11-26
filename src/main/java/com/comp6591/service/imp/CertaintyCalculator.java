@@ -1,12 +1,12 @@
 package com.comp6591.service.imp;
 
-import com.comp6591.service.CalcultorStrategyInterface;
+import com.comp6591.service.CalcultorStrategy;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
 
 import java.util.Stack;
 
-public class CertaintyCalculator implements CalcultorStrategyInterface {
+public class CertaintyCalculator implements CalcultorStrategy {
 
     @Override
     public String getValue(String polynomial) {

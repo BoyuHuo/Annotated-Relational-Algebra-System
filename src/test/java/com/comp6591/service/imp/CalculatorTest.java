@@ -115,7 +115,7 @@ public class CalculatorTest {
         Assert.assertEquals(result, maybeCalculator.getValue(query));
     }
 
-    @Test
+/*    @Test
     public void getProbValue() {
 
         ProbabilityCalculator calculator = new ProbabilityCalculator();
@@ -140,7 +140,7 @@ public class CalculatorTest {
         query = "( ( ( tagS x tagS ) + ( tagS x tagS ) ) + ( tagR x tagS ) )";
         result = "0.4";
         Assert.assertEquals(result, calculator.getValue(query));
-    }
+    }*/
 
 
 
