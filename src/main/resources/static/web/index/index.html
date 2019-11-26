@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Lesion Segmentation Portal</title>
+    <title>Annotated Relational Algebra System</title>
     <link rel="stylesheet" href="../../assets/utils/css/bootstrap.css">
     <link rel="stylesheet" href="../../assets/utils/css/carousel.css">
+    <link rel="stylesheet" href="../../assets/utils/css/bootstrap4-toggle.min.css">
 
     <link rel="stylesheet" href="index.css">
 
@@ -104,8 +105,10 @@
                 <option value="polinomail">Polinomail</option>
                 <option value="standard">Standard</option>
             </select>
-
-            <button type="button" class="btn btn-primary offset-10" onclick="sendQuery()">Submit</button>
+            <div class="offset-8">
+                <input id="output-type" type="checkbox" checked data-toggle="toggle" data-on="File Output" data-off="Text Display"  data-onstyle="success" data-offstyle="warning" class="">
+                <button type="button" class="btn btn-primary " onclick="sendQuery()">Submit</button>
+            </div>
         </div>
     </div>
     </div>
@@ -113,6 +116,7 @@
 
 
 <script src="../../assets/utils/js/jquery.js"></script>
+<script src="../../assets/utils/js/bootstrap4-toggle.min.js"></script>
 <script language="javascript" src="index.js"></script>
 <script>
 

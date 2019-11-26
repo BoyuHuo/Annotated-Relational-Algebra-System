@@ -2,6 +2,7 @@ package com.comp6591.controller;
 
 import com.comp6591.entity.Query;
 import com.comp6591.entity.Table;
+import com.comp6591.service.FileService;
 import com.comp6591.service.QueryService;
 import com.comp6591.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class QueryController {
 
     @Autowired
     QueryService queryService;
+    @Autowired
+    FileService fileService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
@@ -25,9 +28,18 @@ public class QueryController {
 
         Table result = queryService.doQuery(param.getQuery()).pop();
 
-        return Response.getBuilder()
-                .setCode(Response.Code.SUCCESS)
-                .setData(result)
-                .build();
+        if(param.isFileAsResult()){
+
+            fileService.writeData("result",result);
+
+            return Response.getBuilder()
+                    .setCode(Response.Code.SUCCESS)
+                    .build();
+        }else {
+            return Response.getBuilder()
+                    .setCode(Response.Code.SUCCESS)
+                    .setData(result)
+                    .build();
+        }
     }
 }

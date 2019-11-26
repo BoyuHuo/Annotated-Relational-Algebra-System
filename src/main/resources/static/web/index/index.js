@@ -74,9 +74,12 @@ function appendURLFile(url, listName,eta) {
 }
 
 
-var mydata;
+
 
 function sendQuery() {
+
+    let outputAsFile = !document.getElementById('output-type').parentElement.classList.contains("off");
+
     $.ajax({
         url: '/rest/query',
         contentType: 'application/json',
@@ -85,10 +88,11 @@ function sendQuery() {
         timeout: 0,
         data: JSON.stringify({
             "query": $("#query").val(),
-            "type": $("#query-type option:selected").val()
+            "type": $("#query-type option:selected").val(),
+            "fileAsResult": outputAsFile
         }),
         success: function (data) {
-            mydata = data.data.records;
+            var mydata = data.data.records;
 
             var table = $("#resultTable");
             var header = "<thead>";
@@ -128,7 +132,7 @@ function getDatalist() {
         type: "GET",
         timeout: 0,
         success: function (data) {
-            mydata = data;
+            var mydata = data;
             var datalist = $("#datalist").empty();
             if(data.data.length > 0){
                 for(var d in data.data){
