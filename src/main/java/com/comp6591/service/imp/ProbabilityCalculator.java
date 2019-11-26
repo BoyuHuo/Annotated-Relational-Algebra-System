@@ -1,3 +1,4 @@
+/*
 package com.comp6591.service.imp;
 
 import com.comp6591.service.CalcultorStrategyInterface;
@@ -43,3 +44,4 @@ public class ProbabilityCalculator implements CalcultorStrategyInterface {
 
 
 }
+*/

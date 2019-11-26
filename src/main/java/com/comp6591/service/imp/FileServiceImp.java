@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class FileServiceImp implements FileService {
@@ -69,8 +71,44 @@ public class FileServiceImp implements FileService {
         return fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public void writeData(String fileName, Table data) {
+
+        try {
+
+            FileOutputStream fos = new FileOutputStream(filePath + "/result_" + fileName);
+            OutputStreamWriter isr = new OutputStreamWriter(fos, "UTF-8");
+            final BufferedWriter writer = new BufferedWriter(isr);
+
+            Set<String> columns = data.getColumnSet();
+            String lineStr = String.join(",", columns);
+
+            writer.write(lineStr);
+            writer.write("\n");
+
+            data.getRecords().forEach(record -> {
+                Set<String> lineVal = new HashSet<>();
+
+                columns.forEach(c -> {
+                    lineVal.add(record.getFields().get(c));
+                });
+
+                try {
+                    writer.write(String.join(",", columns));
+                    writer.write("\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            writer.close();
+
+            System.out.println("finish write");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
 }
