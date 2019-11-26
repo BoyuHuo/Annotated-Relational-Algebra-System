@@ -15,6 +15,7 @@ public class CalculatorTest {
                 .bag(2)
                 .maybe(true)
                 .certainty(0.2f)
+                .probability(0.2f)
                 .build();
         Constants.TAGS.put("tagP", annotation);
 
@@ -22,6 +23,7 @@ public class CalculatorTest {
                 .bag(5)
                 .maybe(false)
                 .certainty(0.7f)
+                .probability(0.7f)
                 .build();
         Constants.TAGS.put("tagR", annotation);
 
@@ -29,6 +31,7 @@ public class CalculatorTest {
                 .bag(1)
                 .maybe(true)
                 .certainty(0.4f)
+                .probability(0.4f)
                 .build();
         Constants.TAGS.put("tagS", annotation);
     }
@@ -110,6 +113,33 @@ public class CalculatorTest {
         query = "( ( ( tagS x tagS ) + ( tagS x tagS ) ) + ( tagR x tagS ) )";
         result = "1";
         Assert.assertEquals(result, maybeCalculator.getValue(query));
+    }
+
+    @Test
+    public void getProbValue() {
+
+        ProbabilityCalculator calculator = new ProbabilityCalculator();
+
+        String query = "( ( tagP x tagP ) + ( tagP x tagP ) )";
+        String result = "0.2";
+        Assert.assertEquals(result, calculator.getValue(query));
+
+        query = "( tagP x tagR )";
+        result = "0.14";
+        Assert.assertEquals(result, calculator.getValue(query));
+
+        query = "( tagP x tagR )";
+        result = "0.14";
+        Assert.assertEquals(result, calculator.getValue(query));
+
+        query = "( ( ( tagR x tagR ) + ( tagR x tagR ) ) + ( tagR x tagS ) )";
+        result = "0.7";
+        Assert.assertEquals(result, calculator.getValue(query));
+
+
+        query = "( ( ( tagS x tagS ) + ( tagS x tagS ) ) + ( tagR x tagS ) )";
+        result = "0.4";
+        Assert.assertEquals(result, calculator.getValue(query));
     }
 
 
