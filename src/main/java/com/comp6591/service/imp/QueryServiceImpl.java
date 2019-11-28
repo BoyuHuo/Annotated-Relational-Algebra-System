@@ -4,6 +4,7 @@ import com.comp6591.entity.DataManager;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
+import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
 import org.springframework.stereotype.Service;
 
@@ -50,14 +51,14 @@ public class QueryServiceImpl implements QueryService {
                     tableStack.push(naturalJoin(lTable, rTable));
                 } else {
                     String innerQuery = getInnerQuery(inputStack);
-                    tableStack.push(doQuery(innerQuery,type).pop());
+                    tableStack.push(doQuery(innerQuery, type).pop());
                     Table lTable = tableStack.pop();
                     tableStack.push(naturalJoin(lTable, rTable));
                 }
 
             } else if (token.equals(")")) {
                 String innerQuery = getInnerQuery(inputStack);
-                tableStack.push(doQuery(innerQuery,type).pop());
+                tableStack.push(doQuery(innerQuery, type).pop());
 
             } else if (token.equals("(")) {
                 System.out.println("There must be something wrong...");
@@ -77,12 +78,12 @@ public class QueryServiceImpl implements QueryService {
 
             String element = inputStack.pop();
             if (element.equals("(")) {
-                ++ lBracket;
+                ++lBracket;
                 if (lBracket == rBracket) {
                     break;
                 }
             } else if (element.equals(")")) {
-                ++ rBracket;
+                ++rBracket;
                 innerQueryStack.push(element);
             } else {
                 innerQueryStack.push(element);
@@ -117,8 +118,11 @@ public class QueryServiceImpl implements QueryService {
 
         lTable.getRecords().get(0).getFields().forEach((lKey, lValue) -> {
             rTable.getRecords().get(0).getFields().forEach((rKey, rValue) -> {
-                if (lKey.equals(rKey)) {
-                    keys.add(lKey);
+                if (lKey.equals("annotation") || rKey.equals("annotation")) {
+                } else {
+                    if (lKey.equals(rKey)) {
+                        keys.add(lKey);
+                    }
                 }
             });
         });
@@ -169,7 +173,10 @@ public class QueryServiceImpl implements QueryService {
 
         Record result = Util.deepCopyRecord(lRecord);
         rRecord.getFields().forEach((key, value) -> {
-            if (!keys.contains(key)) {
+            if ("annotation".equals(key)) {
+                String v = "( " + String.join(" x ", lRecord.getFields().get(key), rRecord.getFields().get(key)) + " )";
+                result.getFields().put(key, v);
+            }else if (!keys.contains(key)) {
                 result.getFields().put(key, rRecord.getFields().get(key));
             }
         });
