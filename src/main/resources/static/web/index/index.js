@@ -102,7 +102,6 @@ function sendQuery() {
             for(var k in mydata[0].fields){
                 header += "<th>"+k+"</th>"
             }
-            header += "<th>"+"Annotation"+"</th>"
             header+= "</thead>";
             table.append(header);
 
@@ -113,7 +112,6 @@ function sendQuery() {
                 for(var k in mydata[d].fields){
                     tr+="<td>"+ mydata[d].fields[k]+"</td>";
                 }
-                tr+="<td>"+ 0.5+"</td>";
                 tr+= "</tr>";
                 table.append(tr);
             }

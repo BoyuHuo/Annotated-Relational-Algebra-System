@@ -39,6 +39,8 @@ public class AnnotationServiceImp implements AnnotationService {
         result += charCounter;
         result += numCounter;
 
+        numCounter++;
+
         return result;
     }
 
