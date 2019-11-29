@@ -17,7 +17,7 @@ import java.util.Stack;
 public class QueryServiceImpl implements QueryService {
 
 
-    public Stack<Table> doQuery(String input, String type) {
+    public Stack<Table> doQuery(String input) {
 
         Stack<String> inputStack = new Stack<>();
         Stack<Table> tableStack = new Stack<>();
@@ -50,14 +50,14 @@ public class QueryServiceImpl implements QueryService {
                     tableStack.push(naturalJoin(lTable, rTable));
                 } else {
                     String innerQuery = getInnerQuery(inputStack);
-                    tableStack.push(doQuery(innerQuery, type).pop());
+                    tableStack.push(doQuery(innerQuery).pop());
                     Table lTable = tableStack.pop();
                     tableStack.push(naturalJoin(lTable, rTable));
                 }
 
             } else if (token.equals(")")) {
                 String innerQuery = getInnerQuery(inputStack);
-                tableStack.push(doQuery(innerQuery, type).pop());
+                tableStack.push(doQuery(innerQuery).pop());
 
             } else if (token.equals("(")) {
                 System.out.println("There must be something wrong...");

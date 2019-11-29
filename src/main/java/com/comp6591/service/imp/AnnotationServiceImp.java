@@ -3,8 +3,10 @@ package com.comp6591.service.imp;
 import com.comp6591.entity.Annotation;
 import com.comp6591.entity.Table;
 import com.comp6591.service.AnnotationService;
+import com.comp6591.service.CalcultorStrategy;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
+import com.sun.javafx.css.CalculatedValue;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,6 +43,44 @@ public class AnnotationServiceImp implements AnnotationService {
 
         numCounter++;
 
+        return result;
+    }
+
+    public static Table calculateAnnotation(Table result, String type){
+
+        switch (type){
+            case "bag":
+                result.getRecords().parallelStream().forEach(record -> {
+                    CalcultorStrategy calcultor = new BagCalculator();
+                    String bags = calcultor.getValue(record.getFields().get("annotation"));
+                    record.getFields().put("annotation",bags);
+                });
+                break;
+            case "certainty":
+                result.getRecords().parallelStream().forEach(record -> {
+                    CalcultorStrategy calcultor = new CertaintyCalculator();
+                    String bags = calcultor.getValue(record.getFields().get("annotation"));
+                    record.getFields().put("annotation",bags);
+                });
+                break;
+            case "probability":
+                result.getRecords().parallelStream().forEach(record -> {
+                    CalcultorStrategy calcultor = new CertaintyCalculator();
+                    String bags = calcultor.getValue(record.getFields().get("annotation"));
+                    record.getFields().put("annotation",bags);
+                });
+                break;
+            case "maybe":
+                result.getRecords().parallelStream().forEach(record -> {
+                    CalcultorStrategy calcultor = new MaybeCalculator();
+                    String bags = calcultor.getValue(record.getFields().get("annotation"));
+                    record.getFields().put("annotation",bags);
+                });
+                break;
+            case "polynomial": break;
+
+            default: break;
+        }
         return result;
     }
 
