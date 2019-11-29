@@ -31,7 +31,7 @@ public class QueryController {
 
         Table result = queryService.doQuery(param.getQuery()).pop();
 
-        annotationService.calculateAnnotation(result,param.getType());
+        result = annotationService.calculateAnnotation(result,param.getType());
 
         if(param.isFileAsResult()){
 

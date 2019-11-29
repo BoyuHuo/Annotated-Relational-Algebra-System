@@ -1,6 +1,8 @@
 package com.comp6591.utils;
 
 import com.comp6591.entity.Record;
+import com.comp6591.entity.Table;
+import javafx.scene.control.Tab;
 
 import java.util.Random;
 
@@ -11,6 +13,16 @@ public class Util {
 
         target.getFields().forEach((key, value) -> {
             copy.getFields().put(key,value);
+        });
+
+        return copy;
+    }
+
+    public static Table deepCopyTable(Table table){
+        Table copy = new Table();
+
+        table.getRecords().forEach(record -> {
+            copy.getRecords().add(  deepCopyRecord(record));
         });
 
         return copy;
@@ -39,7 +51,8 @@ public class Util {
 
     public static int getRandomMaybe() {
         Random rand = new Random();
-        int value = rand.nextInt(1);
+        int value = rand.nextInt(2);
+        System.out.println(value);
 
         return value;
     }
