@@ -46,10 +46,10 @@ public class AnnotationServiceImp implements AnnotationService {
         return result;
     }
 
-    public static Table calculateAnnotation(Table result, String type){
+    public Table calculateAnnotation(Table result, String type){
 
         switch (type){
-            case "bag":
+            case "bags":
                 result.getRecords().parallelStream().forEach(record -> {
                     CalcultorStrategy calcultor = new BagCalculator();
                     String bags = calcultor.getValue(record.getFields().get("annotation"));
