@@ -6,7 +6,6 @@ import com.comp6591.service.AnnotationService;
 import com.comp6591.service.CalcultorStrategy;
 import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
-import com.sun.javafx.css.CalculatedValue;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -46,7 +45,9 @@ public class AnnotationServiceImp implements AnnotationService {
         return result;
     }
 
-    public Table calculateAnnotation(Table result, String type){
+    public Table calculateAnnotation(Table table, String type){
+
+        Table result = Util.deepCopyTable(table);
 
         switch (type){
             case "bags":
@@ -83,5 +84,6 @@ public class AnnotationServiceImp implements AnnotationService {
         }
         return result;
     }
+
 
 }
