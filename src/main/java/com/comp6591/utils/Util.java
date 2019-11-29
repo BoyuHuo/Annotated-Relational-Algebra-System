@@ -52,7 +52,6 @@ public class Util {
     public static int getRandomMaybe() {
         Random rand = new Random();
         int value = rand.nextInt(2);
-        System.out.println(value);
 
         return value;
     }
