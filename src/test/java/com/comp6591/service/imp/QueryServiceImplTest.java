@@ -145,13 +145,14 @@ class QueryServiceImplTest {
         DataManager.getInstance().addDataTable("test2", rTable);
         DataManager.getInstance().addDataTable("test3", mTable);
 
-        Table result1 = queryService.doQuery("project <B,C> ( test1 join test2 )").pop();
+        Table result1 = queryService.doQuery("project <B,F> ( test1 join test2 )","probability").pop();
+
         System.out.println(result1.toString());
 
-        Table result2 = queryService.doQuery("project <A,B,C,F,G> ( lrTable join test3 )").pop();
+        Table result2 = queryService.doQuery("project <A,B,C,F,G> ( lrTable join test3 )","probability").pop();
         System.out.println(result2.toString());
 
-        Table result3 = queryService.doQuery("project <A,B,C,F,G> ( ( test1 join test2 ) join test3 )").pop();
+        Table result3 = queryService.doQuery("project <A,B,C,F,G> ( ( test1 join test2 ) join test3 )","probability").pop();
         System.out.println(result3.toString());
 
         System.out.println(queryService.union(mTable, nTable).toString());

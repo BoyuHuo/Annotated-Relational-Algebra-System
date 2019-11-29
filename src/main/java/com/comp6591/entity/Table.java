@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -29,5 +30,12 @@ public class Table {
             result.append("\n");
         });
         return result.toString();
+    }
+
+    public Set<String> getColumnSet(){
+        if(records.size()>0){
+            return records.get(0).getFields().keySet();
+        }
+        return null;
     }
 }

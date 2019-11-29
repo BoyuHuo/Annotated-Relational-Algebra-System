@@ -11,4 +11,5 @@ import lombok.*;
 public class Query {
     private String query;
     private String type;  //Probablity , Standered , Bags, Polynomial , ...
+    private boolean fileAsResult; // true: download as file   false: show it in plain text at front end
 }

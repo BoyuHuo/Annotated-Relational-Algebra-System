@@ -18,30 +18,30 @@ public class Util {
 
 
     // range (0, 1]
-    public static String getRandomProbability() {
+    public static float getRandomProbability() {
 
         Random rand = new Random();
         int value = rand.nextInt(99);
 
-        Float prob = Float.valueOf(value + 1) / Float.valueOf(100);
+        float prob = Float.valueOf(value + 1) / Float.valueOf(100);
 
-        return String.valueOf(prob);
+        return prob;
 
     }
 
     // range [1, 10]
-    public static String getRandomBag() {
+    public static int getRandomBag() {
         Random rand = new Random();
         int value = rand.nextInt(9);
 
-        return String.valueOf(value + 1);
+        return value + 1;
     }
 
-    public static String getRandomMaybe() {
+    public static int getRandomMaybe() {
         Random rand = new Random();
         int value = rand.nextInt(1);
 
-        return String.valueOf(value);
+        return value;
     }
 
     public static boolean isTag(String str) {
