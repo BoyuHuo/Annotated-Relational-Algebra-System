@@ -95,6 +95,9 @@ function sendQuery() {
             var mydata = data.data.records;
 
             var table = $("#resultTable");
+            table.empty();
+
+
             var header = "<thead>";
             if(mydata.length<0){
                 return;

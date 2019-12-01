@@ -15,23 +15,28 @@ public class CertaintyCalculator implements CalcultorStrategy {
 
         String[] plItems = polynomial.split(" ");
 
-        for (String s : plItems) {
+        if (plItems.length == 1) {
 
-            if (!s.equals(")")) {
-                plStack.push(s);
-            } else {
+            plStack.push(strToFloat(plItems[0]) + "");
 
-                String element1 = plStack.pop().trim();
-                String operator = plStack.pop().trim();
-                String element2 = plStack.pop().trim();
+        } else {
+            for (String s : plItems) {
+                if (!s.equals(")")) {
+                    plStack.push(s);
+                } else {
 
-                plStack.pop();
-                plStack.push(certaintyCalculator(element1, operator, element2));
+                    String element1 = plStack.pop().trim();
+                    String operator = plStack.pop().trim();
+                    String element2 = plStack.pop().trim();
+
+                    plStack.pop();
+                    plStack.push(certaintyCalculator(element1, operator, element2));
+                }
             }
         }
 
         if (plStack.size() != 1) {
-            throw new RuntimeException("Error occurs in calculte the Bag semantics!");
+            throw new RuntimeException("Error occurs in calculate the Bag semantics!");
         } else {
             return String.valueOf(plStack.pop());
         }
@@ -55,8 +60,7 @@ public class CertaintyCalculator implements CalcultorStrategy {
     }
 
     private float strToFloat(String str) {
-
-        return Util.isTag(str)? Constants.TAGS.get(str).getCertainty() : Float.valueOf(str);
+        return Util.isTag(str) ? Constants.TAGS.get(str).getCertainty() : Float.valueOf(str);
     }
 
 }

@@ -17,20 +17,28 @@ public class BagCalculator implements CalcultorStrategy {
 
         String[] plItems = polynomial.split(" ");
 
-        for (String s : plItems) {
+        if (plItems.length == 1) {
 
-            if (!s.equals(")")) {
-                plStack.push(s);
-            } else {
+            plStack.push(strToNum(plItems[0]) + "");
 
-                String element1 = plStack.pop().trim();
-                String operator = plStack.pop().trim();
-                String element2 = plStack.pop().trim();
+        } else {
+            for (String s : plItems) {
 
-                plStack.pop();
-                plStack.push(bagCalculator(element1, operator, element2));
+                if (!s.equals(")")) {
+                    plStack.push(s);
+                } else {
+
+                    String element1 = plStack.pop().trim();
+                    String operator = plStack.pop().trim();
+                    String element2 = plStack.pop().trim();
+
+                    plStack.pop();
+                    plStack.push(bagCalculator(element1, operator, element2));
+                }
             }
         }
+
+
 
         if (plStack.size() != 1) {
             throw new RuntimeException("Error occurs in calculte the Bag semantics!");

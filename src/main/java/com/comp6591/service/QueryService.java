@@ -11,7 +11,7 @@ public interface QueryService {
 
     Table project(List<String> keys, Table table);
 
-    Stack<Table> doQuery(String query, String type);
+    Stack<Table> doQuery(String query);
   
     Table union(Table lTable, Table rTable);
 }

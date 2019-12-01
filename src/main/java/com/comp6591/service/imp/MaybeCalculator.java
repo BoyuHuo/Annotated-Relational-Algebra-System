@@ -16,23 +16,29 @@ public class MaybeCalculator implements CalcultorStrategy {
 
         String[] plItems = polynomial.split(" ");
 
-        for (String s : plItems) {
+        if (plItems.length == 1) {
 
-            if (!s.equals(")")) {
-                plStack.push(s);
-            } else {
+            plStack.push(strToBool(plItems[0]) + "");
 
-                String element1 = plStack.pop().trim();
-                String operator = plStack.pop().trim();
-                String element2 = plStack.pop().trim();
+        } else {
+            for (String s : plItems) {
 
-                plStack.pop();
-                plStack.push(maybeCalculator(element1, operator, element2));
+                if (!s.equals(")")) {
+                    plStack.push(s);
+                } else {
+
+                    String element1 = plStack.pop().trim();
+                    String operator = plStack.pop().trim();
+                    String element2 = plStack.pop().trim();
+
+                    plStack.pop();
+                    plStack.push(maybeCalculator(element1, operator, element2));
+                }
             }
         }
 
         if (plStack.size() != 1) {
-            throw new RuntimeException("Error occurs in calculte the Bag semantics!");
+            throw new RuntimeException("Error occurs in calculate the Bag semantics!");
         } else {
             String result = plStack.pop();
             if (result.equals(Boolean.toString(false))) {
@@ -55,7 +61,7 @@ public class MaybeCalculator implements CalcultorStrategy {
         } else if (operator.equals(Constants.ADD)) {
             result = bool1 || bool2;
         } else {
-            throw new RuntimeException("Invailid Operator!");
+            throw new RuntimeException("Invalid Operator!");
         }
         return String.valueOf(result);
     }
