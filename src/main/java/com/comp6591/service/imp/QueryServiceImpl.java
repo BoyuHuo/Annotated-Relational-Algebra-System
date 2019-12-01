@@ -65,6 +65,45 @@ public class QueryServiceImpl implements QueryService {
                     }
                 }
 
+            } else if (token.equals("}")) {
+                // select query
+                Table table = tableStack.pop();
+
+                String element = inputStack.pop();
+                Stack<String> selectQueryStack = new Stack<>();
+                while (!element.equals("select")) {
+
+                    selectQueryStack.push(element);
+                    element = inputStack.pop();
+                }
+
+                // delete the last "{" character
+                selectQueryStack.pop();
+
+                String conditions = getInnerQueryFromStack(selectQueryStack);
+
+                List<Condition> and = new ArrayList<>();
+                List<Condition> or = new ArrayList<>();
+
+                while (conditions.contains("or")) {
+                    String orCondition = conditions.substring(conditions.lastIndexOf("or") + 2).trim();
+                    String[] elements = orCondition.split(" ");
+                    or.add(Condition.builder().lhs(elements[0]).operator(elements[1]).rhs(elements[2]).build());
+                    conditions = conditions.substring(0, conditions.lastIndexOf("or")).trim();
+                }
+
+                while (conditions.contains("and")) {
+                    String andCondition = conditions.substring(conditions.lastIndexOf("and") + 2).trim();
+                    String[] elements = andCondition.split(" ");
+                    and.add(Condition.builder().lhs(elements[0]).operator(elements[1]).rhs(elements[2]).build());
+                    conditions = conditions.substring(0, conditions.lastIndexOf("and")).trim();
+                }
+
+                String[] elements = conditions.split(" ");
+                and.add(Condition.builder().lhs(elements[0]).operator(elements[1]).rhs(elements[2]).build());
+
+                tableStack.push(select(table, and, or));
+
             } else if (token.equals(")")) {
                 String innerQuery = getInnerQuery(inputStack);
                 tableStack.push(doQuery(innerQuery).pop());
