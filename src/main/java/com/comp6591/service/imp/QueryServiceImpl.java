@@ -199,6 +199,7 @@ public class QueryServiceImpl implements QueryService {
                     newRecord.getFields().put(key, value);
                 }
             });
+            newRecord.getFields().put("annotation", record.getFields().get("annotation"));
             if (newRecord.getFields().size() > 0 && !recordInTable(result, newRecord)) {
                 result.getRecords().add(newRecord);
             }
@@ -300,6 +301,7 @@ public class QueryServiceImpl implements QueryService {
 
         for (Record record : table.getRecords()) {
             if (record.getFields().equals(candidateRecord.getFields())) {
+                candidateRecord.getFields().put("annotation",record.getFields().get("annotation")+" + "+candidateRecord.getFields().get("annotation"));
                 return true;
             }
         }
