@@ -170,5 +170,8 @@ class QueryServiceImplTest {
 
         System.out.println(queryService.select(lTable, and ,or).toString());
 
+        Table result5 = queryService.doQuery("select { B >= 8 or A = 6 } test1").pop();
+        System.out.println(result5.toString());
+
     }
 }
