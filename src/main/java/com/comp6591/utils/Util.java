@@ -2,8 +2,8 @@ package com.comp6591.utils;
 
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
-import javafx.scene.control.Tab;
 
+import java.util.Map;
 import java.util.Random;
 
 public class Util {
@@ -59,5 +59,15 @@ public class Util {
     public static boolean isTag(String str) {
 
         return str.startsWith("tag")? true : false;
+    }
+
+    public static boolean mapEquals(Map<String, String> map1, Map<String, String> map2) {
+
+        for (String key : map1.keySet()) {
+            if (!key.equals("annotation") && !map1.get(key).equals(map2.get(key))) {
+                return false;
+            }
+        }
+        return true;
     }
 }
