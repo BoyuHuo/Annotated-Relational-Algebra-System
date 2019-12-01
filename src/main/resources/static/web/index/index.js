@@ -92,7 +92,8 @@ function sendQuery() {
             "fileAsResult": outputAsFile
         }),
         success: function (data) {
-            var mydata = data.data.records;
+            var mydata = data.data.table.records;
+            var time = data.data.duration;
 
             var table = $("#resultTable");
             table.empty();
