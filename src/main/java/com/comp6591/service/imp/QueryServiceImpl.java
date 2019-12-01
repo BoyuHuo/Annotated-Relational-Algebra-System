@@ -33,7 +33,7 @@ public class QueryServiceImpl implements QueryService {
             String token = inputStack.pop();
             if (token.equals("project")) {
                 Table table = project(keys, tableStack.pop());
-                tableStack.push(table);
+                tableStack.push(Util.deepCopyTable(table));
             } else if (token.startsWith("<") && token.endsWith(">")) {
                 String[] newKeys = token.substring(1, token.length() - 1).split(",");
                 Arrays.stream(newKeys).forEach((str) -> {
@@ -47,7 +47,7 @@ public class QueryServiceImpl implements QueryService {
                 String nextElement = inputStack.peek();
                 if (!nextElement.equals(")")) {
                     String lTableName = inputStack.pop();
-                    Table lTable = DataManager.getInstance().getData().get(lTableName);
+                    Table lTable = Util.deepCopyTable(DataManager.getInstance().getData().get(lTableName));
                     if ((token.endsWith("join"))) {
                         tableStack.push(naturalJoin(lTable, rTable));
                     } else {
@@ -199,6 +199,7 @@ public class QueryServiceImpl implements QueryService {
                     newRecord.getFields().put(key, value);
                 }
             });
+            newRecord.getFields().put("annotation", record.getFields().get("annotation"));
             if (newRecord.getFields().size() > 0 && !recordInTable(result, newRecord)) {
                 result.getRecords().add(newRecord);
             }
@@ -302,6 +303,7 @@ public class QueryServiceImpl implements QueryService {
 
         for (Record record : table.getRecords()) {
             if (Util.mapEquals(record.getFields(), candidateRecord.getFields())) {
+                record.getFields().put("annotation","( "+record.getFields().get("annotation")+" + "+ candidateRecord.getFields().get("annotation")+" )");
                 return true;
             }
         }
