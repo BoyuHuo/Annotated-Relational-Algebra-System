@@ -4,7 +4,6 @@ import com.comp6591.entity.DataManager;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.QueryService;
-import com.comp6591.utils.Constants;
 import com.comp6591.utils.Util;
 import org.springframework.stereotype.Service;
 
@@ -40,19 +39,28 @@ public class QueryServiceImpl implements QueryService {
                 });
                 keys = new ArrayList<>(Arrays.asList(newKeys));
 
-            } else if (token.endsWith("join")) {
+            } else if (token.endsWith("join") || token.endsWith("union")) {
                 Table rTable = tableStack.pop();
 
                 String nextElement = inputStack.peek();
                 if (!nextElement.equals(")")) {
                     String lTableName = inputStack.pop();
                     Table lTable = DataManager.getInstance().getData().get(lTableName);
-                    tableStack.push(naturalJoin(lTable, rTable));
+                    if ((token.endsWith("join"))) {
+                        tableStack.push(naturalJoin(lTable, rTable));
+                    } else {
+                        tableStack.push(union(lTable, rTable));
+                    }
                 } else {
                     String innerQuery = getInnerQuery(inputStack);
                     tableStack.push(doQuery(innerQuery).pop());
                     Table lTable = tableStack.pop();
-                    tableStack.push(naturalJoin(lTable, rTable));
+
+                    if ((token.endsWith("join"))) {
+                        tableStack.push(naturalJoin(lTable, rTable));
+                    } else {
+                        tableStack.push(union(lTable, rTable));
+                    }
                 }
 
             } else if (token.equals(")")) {
