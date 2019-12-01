@@ -1,5 +1,6 @@
 package com.comp6591.service;
 
+import com.comp6591.entity.Condition;
 import com.comp6591.entity.Table;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface QueryService {
   
     Table union(Table lTable, Table rTable);
 
-    Table select(Table table, List<String> andCondition, List<String> orCondition);
+    Table select(Table table, List<Condition> and, List<Condition> or);
 }

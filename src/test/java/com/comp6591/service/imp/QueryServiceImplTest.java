@@ -1,5 +1,6 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.Condition;
 import com.comp6591.entity.DataManager;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
@@ -158,5 +159,16 @@ class QueryServiceImplTest {
 
         Table result4 = queryService.doQuery("project <F,G> ( test3 union test4 )").pop();
         System.out.println(result4.toString());
+
+        System.out.println("test select.");
+        System.out.println(lTable.toString());
+
+        List<Condition> and = new ArrayList<>();
+        and.add(Condition.builder().operator(">").lhs("C").rhs("8").build());
+        List<Condition> or = new ArrayList<>();
+        or.add(Condition.builder().operator("=").lhs("A").rhs("6").build());
+
+        System.out.println(queryService.select(lTable, and ,or).toString());
+
     }
 }

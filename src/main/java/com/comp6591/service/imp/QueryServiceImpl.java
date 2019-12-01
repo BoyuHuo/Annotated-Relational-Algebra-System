@@ -178,19 +178,19 @@ public class QueryServiceImpl implements QueryService {
         return result;
     }
 
-    public Table select(Table table, List<String> andCondition, List<String> orCondition) {
+    public Table select(Table table, List<Condition> and, List<Condition> or) {
         Table result = new Table();
-        List<Condition> and = new ArrayList<>();
-        List<Condition> or = new ArrayList<>();
-
-        andCondition.forEach(c -> {
-            String[] element = c.split(" ");
-            and.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
-        });
-        orCondition.forEach(c -> {
-            String[] element = c.split(" ");
-            or.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
-        });
+//        List<Condition> and = new ArrayList<>();
+//        List<Condition> or = new ArrayList<>();
+//
+//        andCondition.forEach(c -> {
+//            String[] element = c.split(" ");
+//            and.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
+//        });
+//        orCondition.forEach(c -> {
+//            String[] element = c.split(" ");
+//            or.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
+//        });
 
         table.getRecords().forEach(record -> {
 
@@ -229,25 +229,15 @@ public class QueryServiceImpl implements QueryService {
     private boolean meetCondition(Record record, Condition c) {
         switch (c.getOperator()) {
             case "<":
-                if (Double.parseDouble(record.getFields().get(c.getLhs())) < Double.parseDouble(c.getRhs())) {
-                    return true;
-                }
+                return Double.parseDouble(record.getFields().get(c.getLhs())) < Double.parseDouble(c.getRhs());
             case ">":
-                if (Double.parseDouble(record.getFields().get(c.getLhs())) > Double.parseDouble(c.getRhs())) {
-                    return true;
-                }
+                return Double.parseDouble(record.getFields().get(c.getLhs())) > Double.parseDouble(c.getRhs());
             case ">=":
-                if (Double.parseDouble(record.getFields().get(c.getLhs())) >= Double.parseDouble(c.getRhs())) {
-                    return true;
-                }
+                return Double.parseDouble(record.getFields().get(c.getLhs())) >= Double.parseDouble(c.getRhs());
             case "<=":
-                if (Double.parseDouble(record.getFields().get(c.getLhs())) <= Double.parseDouble(c.getRhs())) {
-                    return true;
-                }
+                return Double.parseDouble(record.getFields().get(c.getLhs())) <= Double.parseDouble(c.getRhs());
             case "=":
-                if (record.getFields().get(c.getLhs()).equals(c.getRhs())) {
-                    return true;
-                }
+                return record.getFields().get(c.getLhs()).equals(c.getRhs());
             default:
                 return false;
         }
