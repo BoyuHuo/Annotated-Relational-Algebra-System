@@ -264,6 +264,8 @@ public class QueryServiceImpl implements QueryService {
                 return Double.parseDouble(record.getFields().get(c.getLhs())) >= Double.parseDouble(c.getRhs());
             case "<=":
                 return Double.parseDouble(record.getFields().get(c.getLhs())) <= Double.parseDouble(c.getRhs());
+            case "!=":
+                return !record.getFields().get(c.getLhs()).equals(c.getRhs());
             case "=":
                 return record.getFields().get(c.getLhs()).equals(c.getRhs());
             default:
@@ -299,7 +301,7 @@ public class QueryServiceImpl implements QueryService {
     private boolean recordInTable(Table table, Record candidateRecord) {
 
         for (Record record : table.getRecords()) {
-            if (record.getFields().equals(candidateRecord.getFields())) {
+            if (Util.mapEquals(record.getFields(), candidateRecord.getFields())) {
                 return true;
             }
         }
