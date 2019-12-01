@@ -176,6 +176,11 @@ public class QueryServiceImpl implements QueryService {
         return result;
     }
 
+    public Table select(Table table, List<String> andCondition, List<String> orCondition) {
+        Table result = new Table();
+        return result;
+    }
+
     private boolean isEqual(List<String> keys, Record lRecord, Record rRecord) {
 
         for (int i = 0; i < keys.size(); i++) {

@@ -14,4 +14,6 @@ public interface QueryService {
     Stack<Table> doQuery(String query);
   
     Table union(Table lTable, Table rTable);
+
+    Table select(Table table, List<String> andCondition, List<String> orCondition);
 }
