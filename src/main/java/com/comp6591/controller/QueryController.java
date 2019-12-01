@@ -2,6 +2,7 @@ package com.comp6591.controller;
 
 import com.comp6591.entity.Query;
 import com.comp6591.entity.Table;
+import com.comp6591.entity.TableWIthDuration;
 import com.comp6591.service.AnnotationService;
 import com.comp6591.service.FileService;
 import com.comp6591.service.QueryService;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.time.Duration;
+import java.time.Instant;
 
 @Controller
 @RequestMapping(path = "/rest/query")
@@ -27,11 +31,18 @@ public class QueryController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public final Response excuteQuery(@RequestBody Query param) {
+
         System.out.println(param.getQuery() + ":" + param.getType());
 
+        Instant start = Instant.now();
         Table result = queryService.doQuery(param.getQuery()).pop();
 
         result = annotationService.calculateAnnotation(result,param.getType());
+
+        Instant end = Instant.now();
+        long duration = Duration.between(start, end).toMillis();
+
+        TableWIthDuration tableWIthDuration = new TableWIthDuration(result, duration);
 
         if(param.isFileAsResult()){
 
@@ -43,7 +54,7 @@ public class QueryController {
         }else {
             return Response.getBuilder()
                     .setCode(Response.Code.SUCCESS)
-                    .setData(result)
+                    .setData(tableWIthDuration)
                     .build();
         }
     }
