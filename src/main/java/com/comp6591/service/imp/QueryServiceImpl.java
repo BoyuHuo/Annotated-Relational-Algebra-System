@@ -33,7 +33,7 @@ public class QueryServiceImpl implements QueryService {
             String token = inputStack.pop();
             if (token.equals("project")) {
                 Table table = project(keys, tableStack.pop());
-                tableStack.push(table);
+                tableStack.push(Util.deepCopyTable(table));
             } else if (token.startsWith("<") && token.endsWith(">")) {
                 String[] newKeys = token.substring(1, token.length() - 1).split(",");
                 Arrays.stream(newKeys).forEach((str) -> {
@@ -47,7 +47,7 @@ public class QueryServiceImpl implements QueryService {
                 String nextElement = inputStack.peek();
                 if (!nextElement.equals(")")) {
                     String lTableName = inputStack.pop();
-                    Table lTable = DataManager.getInstance().getData().get(lTableName);
+                    Table lTable = Util.deepCopyTable(DataManager.getInstance().getData().get(lTableName));
                     if ((token.endsWith("join"))) {
                         tableStack.push(naturalJoin(lTable, rTable));
                     } else {
@@ -265,6 +265,8 @@ public class QueryServiceImpl implements QueryService {
                 return Double.parseDouble(record.getFields().get(c.getLhs())) >= Double.parseDouble(c.getRhs());
             case "<=":
                 return Double.parseDouble(record.getFields().get(c.getLhs())) <= Double.parseDouble(c.getRhs());
+            case "!=":
+                return !record.getFields().get(c.getLhs()).equals(c.getRhs());
             case "=":
                 return record.getFields().get(c.getLhs()).equals(c.getRhs());
             default:
@@ -300,8 +302,8 @@ public class QueryServiceImpl implements QueryService {
     private boolean recordInTable(Table table, Record candidateRecord) {
 
         for (Record record : table.getRecords()) {
-            if (record.getFields().equals(candidateRecord.getFields())) {
-                candidateRecord.getFields().put("annotation",record.getFields().get("annotation")+" + "+candidateRecord.getFields().get("annotation"));
+            if (Util.mapEquals(record.getFields(), candidateRecord.getFields())) {
+                record.getFields().put("annotation","( "+record.getFields().get("annotation")+" + "+ candidateRecord.getFields().get("annotation")+" )");
                 return true;
             }
         }
