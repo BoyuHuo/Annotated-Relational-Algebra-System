@@ -93,7 +93,7 @@ public class QueryServiceImpl implements QueryService {
                 }
 
                 while (conditions.contains("and")) {
-                    String andCondition = conditions.substring(conditions.lastIndexOf("and") + 2).trim();
+                    String andCondition = conditions.substring(conditions.lastIndexOf("and") + 3).trim();
                     String[] elements = andCondition.split(" ");
                     and.add(Condition.builder().lhs(elements[0]).operator(elements[1]).rhs(elements[2]).build());
                     conditions = conditions.substring(0, conditions.lastIndexOf("and")).trim();
@@ -219,17 +219,6 @@ public class QueryServiceImpl implements QueryService {
 
     public Table select(Table table, List<Condition> and, List<Condition> or) {
         Table result = new Table();
-//        List<Condition> and = new ArrayList<>();
-//        List<Condition> or = new ArrayList<>();
-//
-//        andCondition.forEach(c -> {
-//            String[] element = c.split(" ");
-//            and.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
-//        });
-//        orCondition.forEach(c -> {
-//            String[] element = c.split(" ");
-//            or.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
-//        });
 
         table.getRecords().forEach(record -> {
 
