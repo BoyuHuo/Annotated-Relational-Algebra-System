@@ -291,7 +291,7 @@ public class QueryServiceImpl implements QueryService {
             if ("annotation".equals(key)) {
                 String v = "( " + String.join(" x ", lRecord.getFields().get(key), rRecord.getFields().get(key)) + " )";
                 result.getFields().put(key, v);
-            }else if (!keys.contains(key)) {
+            } else if (!keys.contains(key)) {
                 result.getFields().put(key, rRecord.getFields().get(key));
             }
         });
