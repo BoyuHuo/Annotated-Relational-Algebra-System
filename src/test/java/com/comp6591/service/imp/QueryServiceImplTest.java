@@ -173,5 +173,8 @@ class QueryServiceImplTest {
         Table result5 = queryService.doQuery("project <A,C> select { A = 6 and B = 7 or C > 8 } test1").pop();
         System.out.println(result5.toString());
 
+        Table result6 = queryService.doQuery("project <A,C> select { A = 7 or C != 9 } test1").pop();
+        System.out.println(result6.toString());
+
     }
 }
