@@ -1,5 +1,6 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.Condition;
 import com.comp6591.entity.DataManager;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class QueryServiceImpl implements QueryService {
@@ -178,7 +180,77 @@ public class QueryServiceImpl implements QueryService {
 
     public Table select(Table table, List<String> andCondition, List<String> orCondition) {
         Table result = new Table();
+        List<Condition> and = new ArrayList<>();
+        List<Condition> or = new ArrayList<>();
+
+        andCondition.forEach(c -> {
+            String[] element = c.split(" ");
+            and.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
+        });
+        orCondition.forEach(c -> {
+            String[] element = c.split(" ");
+            or.add(Condition.builder().lhs(element[0]).operator(element[1]).rhs(element[2]).build());
+        });
+
+        table.getRecords().forEach(record -> {
+
+            AtomicBoolean valid = new AtomicBoolean(false);
+
+            for (Condition c : or) {
+                if (meetCondition(record, c)) {
+                    valid.set(true);
+                    break;
+                }
+            }
+
+            if (valid.get()) {
+                result.getRecords().add(record);
+                valid.set(false);
+                return;
+            }
+
+            valid.set(true);
+            for (Condition c : and) {
+                if (!meetCondition(record, c)) {
+                    valid.set(false);
+                    return;
+                }
+            }
+
+            if (valid.get()) {
+                result.getRecords().add(record);
+                valid.set(false);
+            }
+        });
+
         return result;
+    }
+
+    private boolean meetCondition(Record record, Condition c) {
+        switch (c.getOperator()) {
+            case "<":
+                if (Double.parseDouble(record.getFields().get(c.getLhs())) < Double.parseDouble(c.getRhs())) {
+                    return true;
+                }
+            case ">":
+                if (Double.parseDouble(record.getFields().get(c.getLhs())) > Double.parseDouble(c.getRhs())) {
+                    return true;
+                }
+            case ">=":
+                if (Double.parseDouble(record.getFields().get(c.getLhs())) >= Double.parseDouble(c.getRhs())) {
+                    return true;
+                }
+            case "<=":
+                if (Double.parseDouble(record.getFields().get(c.getLhs())) <= Double.parseDouble(c.getRhs())) {
+                    return true;
+                }
+            case "=":
+                if (record.getFields().get(c.getLhs()).equals(c.getRhs())) {
+                    return true;
+                }
+            default:
+                return false;
+        }
     }
 
     private boolean isEqual(List<String> keys, Record lRecord, Record rRecord) {
