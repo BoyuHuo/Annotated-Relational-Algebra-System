@@ -144,6 +144,7 @@ class QueryServiceImplTest {
         DataManager.getInstance().addDataTable("test1",lTable);
         DataManager.getInstance().addDataTable("test2", rTable);
         DataManager.getInstance().addDataTable("test3", mTable);
+        DataManager.getInstance().addDataTable("test4", nTable);
 
         Table result1 = queryService.doQuery("project <B,F> ( test1 join test2 )").pop();
 
@@ -155,6 +156,7 @@ class QueryServiceImplTest {
         Table result3 = queryService.doQuery("project <A,B,C,F,G> ( ( test1 join test2 ) join test3 )").pop();
         System.out.println(result3.toString());
 
-        System.out.println(queryService.union(mTable, nTable).toString());
+        Table result4 = queryService.doQuery("project <F,G> ( test3 union test4 )").pop();
+        System.out.println(result4.toString());
     }
 }
