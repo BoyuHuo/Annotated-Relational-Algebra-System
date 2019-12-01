@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class FileServiceImp implements FileService {
                 System.out.println(file.getSize());
                 BufferedOutputStream out = new BufferedOutputStream(
                         //Paths.get()
-                        new FileOutputStream(new File(filePath + "/" + fileName)));
+                        new FileOutputStream(new File(Paths.get(filePath, fileName).toString())));
                 //logger
                 System.out.println(filePath + file.getOriginalFilename());
                 out.write(file.getBytes());
