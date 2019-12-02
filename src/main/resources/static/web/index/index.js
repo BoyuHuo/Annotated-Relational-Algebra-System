@@ -92,8 +92,8 @@ function sendQuery() {
             "fileAsResult": outputAsFile
         }),
         success: function (data) {
-            $("#file-succ").hide();
-            $("#resultTable").hide();
+            $("#file-succ").hide(500);
+            $("#resultTable").hide(500);
             var mydata = data.data.table.records;
             var time = data.data.duration;
             var type = data.data.type;
@@ -128,9 +128,9 @@ function sendQuery() {
                     table.append(tr);
                 }
                 $("#segamentationLoading").hide();
-                table.show();
+                table.show(500);
             }else {
-                $("#file-succ").show();
+                $("#file-succ").show(500);
             }
 
 
@@ -160,4 +160,10 @@ function getDatalist() {
             }
         }
     })
+}
+
+function download() {
+
+    window.location='/rest/data/download';
+
 }
