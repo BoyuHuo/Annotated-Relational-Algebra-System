@@ -95,6 +95,10 @@ function sendQuery() {
             var mydata = data.data.table.records;
             var time = data.data.duration;
 
+            var time_element = $("#time-cost");
+            time_element.text(time);
+
+
             var table = $("#resultTable");
             table.empty();
 
@@ -122,6 +126,9 @@ function sendQuery() {
             $("#segamentationLoading").hide();
             table.show();
 
+        },
+        error:function (data) {
+          alert("Sorry your RA format doesn't meet the requirement! Please check and try again!");
         }
     })
 }
