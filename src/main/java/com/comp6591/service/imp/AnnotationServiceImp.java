@@ -20,7 +20,7 @@ public class AnnotationServiceImp implements AnnotationService {
             record.getFields().put("annotation", annoVal);
 
             Annotation annotation = new Annotation();
-            annotation.setCertainty(Util.getRandomProbability());
+            annotation.setProbability(Util.getRandomProbability());
             annotation.setBag(Util.getRandomBag());
             annotation.setCertainty(Util.getRandomProbability());
             annotation.setMaybe(Util.getRandomMaybe() == 1);

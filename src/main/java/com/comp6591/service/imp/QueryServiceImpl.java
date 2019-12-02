@@ -130,6 +130,7 @@ public class QueryServiceImpl implements QueryService {
                 if (lBracket == rBracket) {
                     break;
                 }
+                innerQueryStack.push(element);
             } else if (element.equals(")")) {
                 ++rBracket;
                 innerQueryStack.push(element);
