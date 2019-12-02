@@ -58,6 +58,10 @@ public class ProbabilityCalculator implements CalcultorStrategy {
         } else {
             throw new RuntimeException("Invailid Operator!");
         }
+
+        if (result >= 1) {
+            result = 1f;
+        }
         return String.valueOf(result);
     }
 
