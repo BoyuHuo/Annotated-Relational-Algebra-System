@@ -66,7 +66,7 @@ public class AnnotationServiceImp implements AnnotationService {
                 break;
             case "probability":
                 result.getRecords().parallelStream().forEach(record -> {
-                    CalcultorStrategy calcultor = new BagCalculator();
+                    CalcultorStrategy calcultor = new ProbabilityCalculator();
                     String bags = calcultor.getValue(record.getFields().get("annotation"));
                     record.getFields().put("annotation",bags);
                 });
