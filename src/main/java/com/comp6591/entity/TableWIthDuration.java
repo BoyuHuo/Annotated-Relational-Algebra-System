@@ -11,4 +11,6 @@ public class TableWIthDuration {
     Table table;
 
     long duration;
+
+    int type;
 }
