@@ -42,14 +42,17 @@ public class QueryController {
         Instant end = Instant.now();
         long duration = Duration.between(start, end).toMillis();
 
-        TableWIthDuration tableWIthDuration = new TableWIthDuration(result, duration);
+        TableWIthDuration tableWIthDuration = new TableWIthDuration(result, duration,0);
 
         if(param.isFileAsResult()){
 
             fileService.writeData("result",result);
 
+            tableWIthDuration.setType(1);
+
             return Response.getBuilder()
                     .setCode(Response.Code.SUCCESS)
+                    .setData(tableWIthDuration)
                     .build();
         }else {
             return Response.getBuilder()

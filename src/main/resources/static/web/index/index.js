@@ -92,36 +92,51 @@ function sendQuery() {
             "fileAsResult": outputAsFile
         }),
         success: function (data) {
+            $("#file-succ").hide(500);
+            $("#resultTable").hide(500);
             var mydata = data.data.table.records;
             var time = data.data.duration;
+            var type = data.data.type;
 
-            var table = $("#resultTable");
-            table.empty();
-
-
-            var header = "<thead>";
-            if(mydata.length<0){
-                return;
-            }
-            for(var k in mydata[0].fields){
-                header += "<th>"+k+"</th>"
-            }
-            header+= "</thead>";
-            table.append(header);
+            var time_element = $("#time-cost");
+            time_element.text(time);
 
 
-            for(var d in mydata){
-                var tr ="<tr>";
+            if(type==0){
+                var table = $("#resultTable");
+                table.empty();
 
-                for(var k in mydata[d].fields){
-                    tr+="<td>"+ mydata[d].fields[k]+"</td>";
+
+                var header = "<thead>";
+                if(mydata.length<0){
+                    return;
                 }
-                tr+= "</tr>";
-                table.append(tr);
-            }
-            $("#segamentationLoading").hide();
-            table.show();
+                for(var k in mydata[0].fields){
+                    header += "<th>"+k+"</th>"
+                }
+                header+= "</thead>";
+                table.append(header);
 
+
+                for(var d in mydata){
+                    var tr ="<tr>";
+
+                    for(var k in mydata[d].fields){
+                        tr+="<td>"+ mydata[d].fields[k]+"</td>";
+                    }
+                    tr+= "</tr>";
+                    table.append(tr);
+                }
+                $("#segamentationLoading").hide();
+                table.show(500);
+            }else {
+                $("#file-succ").show(500);
+            }
+
+
+        },
+        error:function (data) {
+          alert("Sorry your RA format doesn't meet the requirement! Please check and try again!");
         }
     })
 }
@@ -145,4 +160,10 @@ function getDatalist() {
             }
         }
     })
+}
+
+function download() {
+
+    window.location='/rest/data/download';
+
 }

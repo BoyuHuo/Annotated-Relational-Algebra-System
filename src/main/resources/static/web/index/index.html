@@ -45,21 +45,32 @@
         <!-- 点击按钮上传文件 -->
         <div class="col-md-12 up-content btnFile">
             <p style="margin-top:10px;">Result</p>
+
             <div class="up-area">
+
                 <div class="row">
+
                     <ul id="resultList" class="list-group clearfix list-btn" style="width:90%;">
                         <li class="list-group-item" id="segamentationLoading" style="display: none">
                             <div>
                                 <img src="../../assets/images/ajax-loader.gif" alt="loading">
                             </div>
                         </li>
-
                         <table id="resultTable" style="display: none;">
                             
                         </table>
+                            <div id="file-succ" style="display: none">
+                            <h1>The result has been exported successfully!</h1>
+                            <button style="width: 100%" class="btn btn-success" onclick="download()">Download Result</button>
+                        </div>
                     </ul>
+
+
                 </div>
+
+
             </div>
+            <label>Time: </label><label id="time-cost" style="color: #47C6F8 ">0</label> <label> ms</label>
         </div>
     </div>
 

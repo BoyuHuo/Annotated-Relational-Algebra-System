@@ -1,8 +1,10 @@
 package com.comp6591.service.imp;
 
+import com.comp6591.entity.DownloadFile;
 import com.comp6591.entity.Record;
 import com.comp6591.entity.Table;
 import com.comp6591.service.FileService;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -112,6 +114,14 @@ public class FileServiceImp implements FileService {
             e.printStackTrace();
         }
     }
+
+
+    public DownloadFile downloadFile() {
+
+            File file = new File(filePath, "result");
+            return new DownloadFile("result", file);
+    }
+
 
 
 }
