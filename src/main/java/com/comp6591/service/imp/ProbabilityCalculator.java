@@ -53,10 +53,16 @@ public class ProbabilityCalculator implements CalcultorStrategy {
 
         if (operator.equals(Constants.ADD)) {
             result = num1 + num2;
+            Float temp = num1 * num2;
+            result = result - temp;
         } else if (operator.equals(Constants.DOT)) {
             result = num1 * num2;
         } else {
             throw new RuntimeException("Invailid Operator!");
+        }
+
+        if (result >= 1) {
+            result = 1f;
         }
         return String.valueOf(result);
     }
