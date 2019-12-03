@@ -43,6 +43,7 @@ public class QueryController {
         long duration = Duration.between(start, end).toMillis();
 
         TableWIthDuration tableWIthDuration = new TableWIthDuration(result, duration,0);
+        System.out.println("The duration of the query is : " + duration);
 
         if(param.isFileAsResult()){
 
