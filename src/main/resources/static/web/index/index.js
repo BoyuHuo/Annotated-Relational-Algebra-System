@@ -91,6 +91,9 @@ function sendQuery() {
             "type": $("#query-type option:selected").val(),
             "fileAsResult": outputAsFile
         }),
+        beforeSend: function (XMLHttpRequest) {
+            $("#segamentationLoading").show();
+        },
         success: function (data) {
             $("#file-succ").hide(500);
             $("#resultTable").hide(500);
@@ -134,6 +137,9 @@ function sendQuery() {
             }
 
 
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            $("#segamentationLoading").hide();
         },
         error:function (data) {
           alert("Sorry your RA format doesn't meet the requirement! Please check and try again!");
